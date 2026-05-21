@@ -1,0 +1,1509 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "api.py",
+      "file_type": "code",
+      "source_file": "api.py",
+      "source_location": "L1",
+      "id": "api_py",
+      "community": 2,
+      "norm_label": "api.py"
+    },
+    {
+      "label": "AnalyzeRequest",
+      "file_type": "code",
+      "source_file": "api.py",
+      "source_location": "L37",
+      "id": "ai_based_hands_on_skill_analyzer_api_analyzerequest",
+      "community": 2,
+      "norm_label": "analyzerequest"
+    },
+    {
+      "label": "BaseModel",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "id": "basemodel",
+      "community": 2,
+      "norm_label": "basemodel"
+    },
+    {
+      "label": "read_root()",
+      "file_type": "code",
+      "source_file": "api.py",
+      "source_location": "L47",
+      "id": "ai_based_hands_on_skill_analyzer_api_read_root",
+      "community": 2,
+      "norm_label": "read_root()"
+    },
+    {
+      "label": "get_logo()",
+      "file_type": "code",
+      "source_file": "api.py",
+      "source_location": "L51",
+      "id": "ai_based_hands_on_skill_analyzer_api_get_logo",
+      "community": 2,
+      "norm_label": "get_logo()"
+    },
+    {
+      "label": "analyze_profile()",
+      "file_type": "code",
+      "source_file": "api.py",
+      "source_location": "L55",
+      "id": "ai_based_hands_on_skill_analyzer_api_analyze_profile",
+      "community": 2,
+      "norm_label": "analyze_profile()"
+    },
+    {
+      "label": "analyze_skills_with_upload()",
+      "file_type": "code",
+      "source_file": "api.py",
+      "source_location": "L87",
+      "id": "ai_based_hands_on_skill_analyzer_api_analyze_skills_with_upload",
+      "community": 2,
+      "norm_label": "analyze_skills_with_upload()"
+    },
+    {
+      "label": "Triggers the full pipeline and scoring synchronously.     (Note: Video transcri",
+      "file_type": "rationale",
+      "source_file": "api.py",
+      "source_location": "L56",
+      "id": "ai_based_hands_on_skill_analyzer_api_rationale_56",
+      "community": 2,
+      "norm_label": "triggers the full pipeline and scoring synchronously.     (note: video transcri"
+    },
+    {
+      "label": "Triggers the full pipeline and scoring using form data (allows actual PDF file u",
+      "file_type": "rationale",
+      "source_file": "api.py",
+      "source_location": "L93",
+      "id": "ai_based_hands_on_skill_analyzer_api_rationale_93",
+      "community": 2,
+      "norm_label": "triggers the full pipeline and scoring using form data (allows actual pdf file u"
+    },
+    {
+      "label": "app.py",
+      "file_type": "code",
+      "source_file": "app.py",
+      "source_location": "L1",
+      "id": "app_py",
+      "community": 9,
+      "norm_label": "app.py"
+    },
+    {
+      "label": "asgi.py",
+      "file_type": "code",
+      "source_file": "asgi.py",
+      "source_location": "L1",
+      "id": "asgi_py",
+      "community": 10,
+      "norm_label": "asgi.py"
+    },
+    {
+      "label": "github_extractor.py",
+      "file_type": "code",
+      "source_file": "github_extractor.py",
+      "source_location": "L1",
+      "id": "github_extractor_py",
+      "community": 0,
+      "norm_label": "github_extractor.py"
+    },
+    {
+      "label": "GitHubExtractor",
+      "file_type": "code",
+      "source_file": "github_extractor.py",
+      "source_location": "L15",
+      "id": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor",
+      "community": 0,
+      "norm_label": "githubextractor"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "github_extractor.py",
+      "source_location": "L16",
+      "id": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor_init",
+      "community": 0,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".get_user_data()",
+      "file_type": "code",
+      "source_file": "github_extractor.py",
+      "source_location": "L29",
+      "id": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor_get_user_data",
+      "community": 0,
+      "norm_label": ".get_user_data()"
+    },
+    {
+      "label": "Initialize the GitHub API client.         :param token: Optional GitHub Persona",
+      "file_type": "rationale",
+      "source_file": "github_extractor.py",
+      "source_location": "L17",
+      "id": "ai_based_hands_on_skill_analyzer_github_extractor_rationale_17",
+      "community": 0,
+      "norm_label": "initialize the github api client.         :param token: optional github persona"
+    },
+    {
+      "label": "Fetches public repositories, languages, and general stats for a given username.",
+      "file_type": "rationale",
+      "source_file": "github_extractor.py",
+      "source_location": "L30",
+      "id": "ai_based_hands_on_skill_analyzer_github_extractor_rationale_30",
+      "community": 0,
+      "norm_label": "fetches public repositories, languages, and general stats for a given username."
+    },
+    {
+      "label": "link_validator.py",
+      "file_type": "code",
+      "source_file": "link_validator.py",
+      "source_location": "L1",
+      "id": "link_validator_py",
+      "community": 3,
+      "norm_label": "link_validator.py"
+    },
+    {
+      "label": "LinkValidator",
+      "file_type": "code",
+      "source_file": "link_validator.py",
+      "source_location": "L10",
+      "id": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator",
+      "community": 3,
+      "norm_label": "linkvalidator"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "link_validator.py",
+      "source_location": "L11",
+      "id": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_init",
+      "community": 3,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": "._is_deployed_app()",
+      "file_type": "code",
+      "source_file": "link_validator.py",
+      "source_location": "L28",
+      "id": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_is_deployed_app",
+      "community": 3,
+      "norm_label": "._is_deployed_app()"
+    },
+    {
+      "label": ".validate_url()",
+      "file_type": "code",
+      "source_file": "link_validator.py",
+      "source_location": "L52",
+      "id": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_validate_url",
+      "community": 3,
+      "norm_label": ".validate_url()"
+    },
+    {
+      "label": ".validate_links()",
+      "file_type": "code",
+      "source_file": "link_validator.py",
+      "source_location": "L89",
+      "id": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_validate_links",
+      "community": 3,
+      "norm_label": ".validate_links()"
+    },
+    {
+      "label": "Heuristic to check if a URL is likely a live deployed app.         Checks again",
+      "file_type": "rationale",
+      "source_file": "link_validator.py",
+      "source_location": "L29",
+      "id": "ai_based_hands_on_skill_analyzer_link_validator_rationale_29",
+      "community": 3,
+      "norm_label": "heuristic to check if a url is likely a live deployed app.         checks again"
+    },
+    {
+      "label": "Validates a single URL.",
+      "file_type": "rationale",
+      "source_file": "link_validator.py",
+      "source_location": "L53",
+      "id": "ai_based_hands_on_skill_analyzer_link_validator_rationale_53",
+      "community": 3,
+      "norm_label": "validates a single url."
+    },
+    {
+      "label": "Takes a list of URLs and validates each of them.         Returns a dictionary m",
+      "file_type": "rationale",
+      "source_file": "link_validator.py",
+      "source_location": "L90",
+      "id": "ai_based_hands_on_skill_analyzer_link_validator_rationale_90",
+      "community": 3,
+      "norm_label": "takes a list of urls and validates each of them.         returns a dictionary m"
+    },
+    {
+      "label": "main.py",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L1",
+      "id": "main_py",
+      "community": 0,
+      "norm_label": "main.py"
+    },
+    {
+      "label": "SkillAnalyzerPipeline",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L15",
+      "id": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline",
+      "community": 0,
+      "norm_label": "skillanalyzerpipeline"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L16",
+      "id": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline_init",
+      "community": 0,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".run_pipeline()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L24",
+      "id": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline_run_pipeline",
+      "community": 0,
+      "norm_label": ".run_pipeline()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "main.py",
+      "source_location": "L77",
+      "id": "ai_based_hands_on_skill_analyzer_main_main",
+      "community": 0,
+      "norm_label": "main()"
+    },
+    {
+      "label": "Runs the full backend extraction and cleaning pipeline.",
+      "file_type": "rationale",
+      "source_file": "main.py",
+      "source_location": "L29",
+      "id": "ai_based_hands_on_skill_analyzer_main_rationale_29",
+      "community": 0,
+      "norm_label": "runs the full backend extraction and cleaning pipeline."
+    },
+    {
+      "label": "resume_extractor.py",
+      "file_type": "code",
+      "source_file": "resume_extractor.py",
+      "source_location": "L1",
+      "id": "resume_extractor_py",
+      "community": 1,
+      "norm_label": "resume_extractor.py"
+    },
+    {
+      "label": "ResumeExtractor",
+      "file_type": "code",
+      "source_file": "resume_extractor.py",
+      "source_location": "L10",
+      "id": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor",
+      "community": 1,
+      "norm_label": "resumeextractor"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "resume_extractor.py",
+      "source_location": "L11",
+      "id": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_init",
+      "community": 1,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".extract_text_from_pdf()",
+      "file_type": "code",
+      "source_file": "resume_extractor.py",
+      "source_location": "L27",
+      "id": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_text_from_pdf",
+      "community": 1,
+      "norm_label": ".extract_text_from_pdf()"
+    },
+    {
+      "label": ".clean_text()",
+      "file_type": "code",
+      "source_file": "resume_extractor.py",
+      "source_location": "L41",
+      "id": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_clean_text",
+      "community": 1,
+      "norm_label": ".clean_text()"
+    },
+    {
+      "label": ".extract_skills()",
+      "file_type": "code",
+      "source_file": "resume_extractor.py",
+      "source_location": "L47",
+      "id": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_skills",
+      "community": 1,
+      "norm_label": ".extract_skills()"
+    },
+    {
+      "label": ".extract_urls()",
+      "file_type": "code",
+      "source_file": "resume_extractor.py",
+      "source_location": "L59",
+      "id": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_urls",
+      "community": 1,
+      "norm_label": ".extract_urls()"
+    },
+    {
+      "label": ".process_resume()",
+      "file_type": "code",
+      "source_file": "resume_extractor.py",
+      "source_location": "L72",
+      "id": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_process_resume",
+      "community": 1,
+      "norm_label": ".process_resume()"
+    },
+    {
+      "label": "Extract all text from a PDF file.",
+      "file_type": "rationale",
+      "source_file": "resume_extractor.py",
+      "source_location": "L28",
+      "id": "ai_based_hands_on_skill_analyzer_resume_extractor_rationale_28",
+      "community": 1,
+      "norm_label": "extract all text from a pdf file."
+    },
+    {
+      "label": "Simple keyword matching for skills.",
+      "file_type": "rationale",
+      "source_file": "resume_extractor.py",
+      "source_location": "L48",
+      "id": "ai_based_hands_on_skill_analyzer_resume_extractor_rationale_48",
+      "community": 1,
+      "norm_label": "simple keyword matching for skills."
+    },
+    {
+      "label": "Extract URLs found in the text.",
+      "file_type": "rationale",
+      "source_file": "resume_extractor.py",
+      "source_location": "L60",
+      "id": "ai_based_hands_on_skill_analyzer_resume_extractor_rationale_60",
+      "community": 1,
+      "norm_label": "extract urls found in the text."
+    },
+    {
+      "label": "Main pipeline to process a resume PDF.",
+      "file_type": "rationale",
+      "source_file": "resume_extractor.py",
+      "source_location": "L73",
+      "id": "ai_based_hands_on_skill_analyzer_resume_extractor_rationale_73",
+      "community": 1,
+      "norm_label": "main pipeline to process a resume pdf."
+    },
+    {
+      "label": "scorer.py",
+      "file_type": "code",
+      "source_file": "scorer.py",
+      "source_location": "L1",
+      "id": "scorer_py",
+      "community": 7,
+      "norm_label": "scorer.py"
+    },
+    {
+      "label": "SkillScorer",
+      "file_type": "code",
+      "source_file": "scorer.py",
+      "source_location": "L6",
+      "id": "ai_based_hands_on_skill_analyzer_scorer_skillscorer",
+      "community": 7,
+      "norm_label": "skillscorer"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "scorer.py",
+      "source_location": "L7",
+      "id": "ai_based_hands_on_skill_analyzer_scorer_skillscorer_init",
+      "community": 7,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".calculate_score()",
+      "file_type": "code",
+      "source_file": "scorer.py",
+      "source_location": "L10",
+      "id": "ai_based_hands_on_skill_analyzer_scorer_skillscorer_calculate_score",
+      "community": 7,
+      "norm_label": ".calculate_score()"
+    },
+    {
+      "label": "Calculates a Hands-On Persona score based on the extracted data.         Return",
+      "file_type": "rationale",
+      "source_file": "scorer.py",
+      "source_location": "L11",
+      "id": "ai_based_hands_on_skill_analyzer_scorer_rationale_11",
+      "community": 7,
+      "norm_label": "calculates a hands-on persona score based on the extracted data.         return"
+    },
+    {
+      "label": "vercel.json",
+      "file_type": "code",
+      "source_file": "vercel.json",
+      "source_location": "L1",
+      "id": "vercel_json",
+      "community": 8,
+      "norm_label": "vercel.json"
+    },
+    {
+      "label": "builds",
+      "file_type": "code",
+      "source_file": "vercel.json",
+      "source_location": "L2",
+      "id": "ai_based_hands_on_skill_analyzer_vercel_builds",
+      "community": 8,
+      "norm_label": "builds"
+    },
+    {
+      "label": "video_transcriber.py",
+      "file_type": "code",
+      "source_file": "video_transcriber.py",
+      "source_location": "L1",
+      "id": "video_transcriber_py",
+      "community": 5,
+      "norm_label": "video_transcriber.py"
+    },
+    {
+      "label": "VideoTranscriber",
+      "file_type": "code",
+      "source_file": "video_transcriber.py",
+      "source_location": "L16",
+      "id": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber",
+      "community": 5,
+      "norm_label": "videotranscriber"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "video_transcriber.py",
+      "source_location": "L17",
+      "id": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber_init",
+      "community": 5,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".download_audio()",
+      "file_type": "code",
+      "source_file": "video_transcriber.py",
+      "source_location": "L31",
+      "id": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber_download_audio",
+      "community": 5,
+      "norm_label": ".download_audio()"
+    },
+    {
+      "label": ".transcribe_video()",
+      "file_type": "code",
+      "source_file": "video_transcriber.py",
+      "source_location": "L57",
+      "id": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber_transcribe_video",
+      "community": 5,
+      "norm_label": ".transcribe_video()"
+    },
+    {
+      "label": "Initializes the Whisper model.         :param model_size: 'tiny', 'base', 'smal",
+      "file_type": "rationale",
+      "source_file": "video_transcriber.py",
+      "source_location": "L18",
+      "id": "ai_based_hands_on_skill_analyzer_video_transcriber_rationale_18",
+      "community": 5,
+      "norm_label": "initializes the whisper model.         :param model_size: 'tiny', 'base', 'smal"
+    },
+    {
+      "label": "Downloads the lowest-quality audio from the given URL.",
+      "file_type": "rationale",
+      "source_file": "video_transcriber.py",
+      "source_location": "L32",
+      "id": "ai_based_hands_on_skill_analyzer_video_transcriber_rationale_32",
+      "community": 5,
+      "norm_label": "downloads the lowest-quality audio from the given url."
+    },
+    {
+      "label": "Downloads the video audio to a temporary file, transcribes it, and cleans up.",
+      "file_type": "rationale",
+      "source_file": "video_transcriber.py",
+      "source_location": "L58",
+      "id": "ai_based_hands_on_skill_analyzer_video_transcriber_rationale_58",
+      "community": 5,
+      "norm_label": "downloads the video audio to a temporary file, transcribes it, and cleans up."
+    },
+    {
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "id": "readme_md",
+      "community": 4,
+      "norm_label": "readme.md"
+    },
+    {
+      "label": "AI Skill Analyzer",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "id": "ai_based_hands_on_skill_analyzer_readme_ai_skill_analyzer",
+      "community": 4,
+      "norm_label": "ai skill analyzer"
+    },
+    {
+      "label": "Method of Approach & System Architecture",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L5",
+      "id": "ai_based_hands_on_skill_analyzer_readme_method_of_approach_system_architecture",
+      "community": 4,
+      "norm_label": "method of approach & system architecture"
+    },
+    {
+      "label": "Data Collection & Extraction",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L17",
+      "id": "ai_based_hands_on_skill_analyzer_readme_data_collection_extraction",
+      "community": 4,
+      "norm_label": "data collection & extraction"
+    },
+    {
+      "label": "Evaluation Criteria & Scoring Methodology",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L25",
+      "id": "ai_based_hands_on_skill_analyzer_readme_evaluation_criteria_scoring_methodology",
+      "community": 4,
+      "norm_label": "evaluation criteria & scoring methodology"
+    },
+    {
+      "label": "Setup & Deployment",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L51",
+      "id": "ai_based_hands_on_skill_analyzer_readme_setup_deployment",
+      "community": 6,
+      "norm_label": "setup & deployment"
+    },
+    {
+      "label": "1. Backend Server",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L58",
+      "id": "ai_based_hands_on_skill_analyzer_readme_1_backend_server",
+      "community": 6,
+      "norm_label": "1. backend server"
+    },
+    {
+      "label": "code:bash (python -m venv venv)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L59",
+      "id": "ai_based_hands_on_skill_analyzer_readme_codeblock_1",
+      "community": 6,
+      "norm_label": "code:bash (python -m venv venv)"
+    },
+    {
+      "label": "code:bash (python -m uvicorn api:app --host 0.0.0.0 --port 8000)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L69",
+      "id": "ai_based_hands_on_skill_analyzer_readme_codeblock_2",
+      "community": 6,
+      "norm_label": "code:bash (python -m uvicorn api:app --host 0.0.0.0 --port 8000)"
+    },
+    {
+      "label": "2. Frontend Interface",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L73",
+      "id": "ai_based_hands_on_skill_analyzer_readme_2_frontend_interface",
+      "community": 6,
+      "norm_label": "2. frontend interface"
+    },
+    {
+      "label": "code:bash (# In a new terminal, serve the frontend:)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L75",
+      "id": "ai_based_hands_on_skill_analyzer_readme_codeblock_3",
+      "community": 6,
+      "norm_label": "code:bash (# in a new terminal, serve the frontend:)"
+    },
+    {
+      "label": "Sample Profiles to Test",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L81",
+      "id": "ai_based_hands_on_skill_analyzer_readme_sample_profiles_to_test",
+      "community": 4,
+      "norm_label": "sample profiles to test"
+    },
+    {
+      "label": "Resume Evaluation Case Study",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L88",
+      "id": "ai_based_hands_on_skill_analyzer_readme_resume_evaluation_case_study",
+      "community": 4,
+      "norm_label": "resume evaluation case study"
+    },
+    {
+      "label": "Input Scenario",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L92",
+      "id": "ai_based_hands_on_skill_analyzer_readme_input_scenario",
+      "community": 4,
+      "norm_label": "input scenario"
+    },
+    {
+      "label": "System Output & Persona Classification",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L97",
+      "id": "ai_based_hands_on_skill_analyzer_readme_system_output_persona_classification",
+      "community": 4,
+      "norm_label": "system output & persona classification"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "api_py",
+      "target": "ai_based_hands_on_skill_analyzer_api_analyzerequest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api.py",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "api_py",
+      "target": "ai_based_hands_on_skill_analyzer_api_read_root",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api.py",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "api_py",
+      "target": "ai_based_hands_on_skill_analyzer_api_get_logo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api.py",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "api_py",
+      "target": "ai_based_hands_on_skill_analyzer_api_analyze_profile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "api.py",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "api_py",
+      "target": "ai_based_hands_on_skill_analyzer_api_analyze_skills_with_upload",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "api.py",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_api_analyzerequest",
+      "target": "basemodel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "api.py",
+      "source_location": "L13",
+      "weight": 0.8,
+      "source": "ai_based_hands_on_skill_analyzer_api_analyzerequest",
+      "target": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "api.py",
+      "source_location": "L14",
+      "weight": 0.8,
+      "source": "ai_based_hands_on_skill_analyzer_api_analyzerequest",
+      "target": "ai_based_hands_on_skill_analyzer_scorer_skillscorer",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "api.py",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_api_rationale_56",
+      "target": "ai_based_hands_on_skill_analyzer_api_analyze_profile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "api.py",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_api_rationale_93",
+      "target": "ai_based_hands_on_skill_analyzer_api_analyze_skills_with_upload",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "github_extractor.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "github_extractor_py",
+      "target": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "github_extractor.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor",
+      "target": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "github_extractor.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor",
+      "target": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor_get_user_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "main.py",
+      "source_location": "L7",
+      "weight": 0.8,
+      "source": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline",
+      "target": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline_init",
+      "target": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "github_extractor.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_github_extractor_rationale_17",
+      "target": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "github_extractor.py",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_github_extractor_rationale_30",
+      "target": "ai_based_hands_on_skill_analyzer_github_extractor_githubextractor_get_user_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "link_validator.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "link_validator_py",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "link_validator.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "link_validator.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_is_deployed_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "link_validator.py",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_validate_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "link_validator.py",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_validate_links",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "main.py",
+      "source_location": "L9",
+      "weight": 0.8,
+      "source": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline_init",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "link_validator.py",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_validate_url",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_is_deployed_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "link_validator.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_link_validator_rationale_29",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_is_deployed_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "link_validator.py",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_validate_links",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_validate_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "link_validator.py",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_link_validator_rationale_53",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_validate_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "link_validator.py",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_link_validator_rationale_90",
+      "target": "ai_based_hands_on_skill_analyzer_link_validator_linkvalidator_validate_links",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "main_py",
+      "target": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "main_py",
+      "target": "ai_based_hands_on_skill_analyzer_main_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline",
+      "target": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline",
+      "target": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline_run_pipeline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_main_main",
+      "target": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "main.py",
+      "source_location": "L8",
+      "weight": 0.8,
+      "source": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "main.py",
+      "source_location": "L10",
+      "weight": 0.8,
+      "source": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline",
+      "target": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline_init",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "main.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline_init",
+      "target": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_main_main",
+      "target": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline_run_pipeline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_main_rationale_29",
+      "target": "ai_based_hands_on_skill_analyzer_main_skillanalyzerpipeline_run_pipeline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "resume_extractor_py",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_text_from_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_clean_text",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_skills",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_urls",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_process_resume",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_process_resume",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_text_from_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_rationale_28",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_text_from_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_process_resume",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_clean_text",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_process_resume",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_skills",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_rationale_48",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_skills",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_process_resume",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_urls",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L60",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_rationale_60",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_extract_urls",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "resume_extractor.py",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_resume_extractor_rationale_73",
+      "target": "ai_based_hands_on_skill_analyzer_resume_extractor_resumeextractor_process_resume",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scorer.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "scorer_py",
+      "target": "ai_based_hands_on_skill_analyzer_scorer_skillscorer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scorer.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_scorer_skillscorer",
+      "target": "ai_based_hands_on_skill_analyzer_scorer_skillscorer_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scorer.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_scorer_skillscorer",
+      "target": "ai_based_hands_on_skill_analyzer_scorer_skillscorer_calculate_score",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scorer.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_scorer_rationale_11",
+      "target": "ai_based_hands_on_skill_analyzer_scorer_skillscorer_calculate_score",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "vercel.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "vercel_json",
+      "target": "ai_based_hands_on_skill_analyzer_vercel_builds",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "video_transcriber.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "video_transcriber_py",
+      "target": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "video_transcriber.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber",
+      "target": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "video_transcriber.py",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber",
+      "target": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber_download_audio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "video_transcriber.py",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber",
+      "target": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber_transcribe_video",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "video_transcriber.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_video_transcriber_rationale_18",
+      "target": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "video_transcriber.py",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber_transcribe_video",
+      "target": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber_download_audio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "video_transcriber.py",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_video_transcriber_rationale_32",
+      "target": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber_download_audio",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "video_transcriber.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_video_transcriber_rationale_58",
+      "target": "ai_based_hands_on_skill_analyzer_video_transcriber_videotranscriber_transcribe_video",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "readme_md",
+      "target": "ai_based_hands_on_skill_analyzer_readme_ai_skill_analyzer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_ai_skill_analyzer",
+      "target": "ai_based_hands_on_skill_analyzer_readme_method_of_approach_system_architecture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_ai_skill_analyzer",
+      "target": "ai_based_hands_on_skill_analyzer_readme_data_collection_extraction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_ai_skill_analyzer",
+      "target": "ai_based_hands_on_skill_analyzer_readme_evaluation_criteria_scoring_methodology",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_ai_skill_analyzer",
+      "target": "ai_based_hands_on_skill_analyzer_readme_setup_deployment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_ai_skill_analyzer",
+      "target": "ai_based_hands_on_skill_analyzer_readme_sample_profiles_to_test",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_ai_skill_analyzer",
+      "target": "ai_based_hands_on_skill_analyzer_readme_resume_evaluation_case_study",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_setup_deployment",
+      "target": "ai_based_hands_on_skill_analyzer_readme_1_backend_server",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_setup_deployment",
+      "target": "ai_based_hands_on_skill_analyzer_readme_2_frontend_interface",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_1_backend_server",
+      "target": "ai_based_hands_on_skill_analyzer_readme_codeblock_1",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_1_backend_server",
+      "target": "ai_based_hands_on_skill_analyzer_readme_codeblock_2",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_2_frontend_interface",
+      "target": "ai_based_hands_on_skill_analyzer_readme_codeblock_3",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_resume_evaluation_case_study",
+      "target": "ai_based_hands_on_skill_analyzer_readme_input_scenario",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "ai_based_hands_on_skill_analyzer_readme_resume_evaluation_case_study",
+      "target": "ai_based_hands_on_skill_analyzer_readme_system_output_persona_classification",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": []
+}
