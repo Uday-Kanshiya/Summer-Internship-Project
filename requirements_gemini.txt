@@ -1,0 +1,5 @@
+tree-sitter==0.25.0
+tree-sitter-python
+networkx
+matplotlib
+google-genai
