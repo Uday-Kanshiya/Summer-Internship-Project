@@ -1,0 +1,18 @@
+{
+  "repo_id": "ae3f092a03674019b5d84e1e8e1f63cc",
+  "name": "Calculator",
+  "origin": "https://github.com/Uday-Kanshiya/Calculator.git",
+  "status": "partial",
+  "stats": {
+    "total_files": 7,
+    "python_files": 3,
+    "total_lines": 1001,
+    "python_lines": 724
+  },
+  "warnings": [
+    "Native Graphify CLI was not found, so Stage 1 is using a transparent graphify-fallback graph derived from CodeGraph. Install optional package graphifyy only if you need native Graphify output."
+  ],
+  "error": null,
+  "created_at": "2026-05-26T10:22:43.704873Z",
+  "updated_at": "2026-05-26T10:22:44.930340Z"
+}

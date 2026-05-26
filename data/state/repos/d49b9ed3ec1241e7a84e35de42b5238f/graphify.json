@@ -1,0 +1,1190 @@
+{
+  "repo_id": "d49b9ed3ec1241e7a84e35de42b5238f",
+  "source": "graphify",
+  "nodes": [
+    {
+      "node_id": "graphify:app_py",
+      "node_type": "concept",
+      "label": "app.py",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "app.py",
+        "source_location": "L1"
+      }
+    },
+    {
+      "node_id": "graphify:source_app_evaluate_now",
+      "node_type": "concept",
+      "label": "evaluate_now()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "app.py",
+        "source_location": "L29"
+      }
+    },
+    {
+      "node_id": "graphify:source_app_handle_click",
+      "node_type": "concept",
+      "label": "handle_click()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "app.py",
+        "source_location": "L72"
+      }
+    },
+    {
+      "node_id": "graphify:source_app_rationale_30",
+      "node_type": "concept",
+      "label": "Evaluates the current formula expression in session state,      updating result",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "app.py",
+        "source_location": "L30"
+      }
+    },
+    {
+      "node_id": "graphify:source_app_rationale_73",
+      "node_type": "concept",
+      "label": "Handles standard and complex button clicks on the interactive keypad.",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "app.py",
+        "source_location": "L73"
+      }
+    },
+    {
+      "node_id": "graphify:calculator_core_py",
+      "node_type": "concept",
+      "label": "calculator_core.py",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L1"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_safeevaluator",
+      "node_type": "concept",
+      "label": "SafeEvaluator",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L5"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_safeevaluator_init",
+      "node_type": "concept",
+      "label": ".__init__()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L10"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_safeevaluator_get_functions",
+      "node_type": "concept",
+      "label": ".get_functions()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L35"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_safeevaluator_evaluate",
+      "node_type": "concept",
+      "label": ".evaluate()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L122"
+      }
+    },
+    {
+      "node_id": "graphify:str",
+      "node_type": "concept",
+      "label": "str",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L122"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_safeevaluator_visit_num",
+      "node_type": "concept",
+      "label": ".visit_Num()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L145"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_safeevaluator_visit_constant",
+      "node_type": "concept",
+      "label": ".visit_Constant()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L148"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_safeevaluator_visit_binop",
+      "node_type": "concept",
+      "label": ".visit_BinOp()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L151"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_safeevaluator_visit_unaryop",
+      "node_type": "concept",
+      "label": ".visit_UnaryOp()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L166"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_safeevaluator_visit_name",
+      "node_type": "concept",
+      "label": ".visit_Name()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L173"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_safeevaluator_visit_call",
+      "node_type": "concept",
+      "label": ".visit_Call()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L181"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_safeevaluator_generic_visit",
+      "node_type": "concept",
+      "label": ".generic_visit()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "calculator_core.py",
+        "source_location": "L202"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_rationale_6",
+      "node_type": "concept",
+      "label": "A safe mathematical expression evaluator using Python's AST (Abstract Syntax Tre",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "calculator_core.py",
+        "source_location": "L6"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_rationale_36",
+      "node_type": "concept",
+      "label": "Returns functions available in the calculator, taking into account          the",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "calculator_core.py",
+        "source_location": "L36"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_rationale_123",
+      "node_type": "concept",
+      "label": "Sanitizes and evaluates the expression string safely.",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "calculator_core.py",
+        "source_location": "L123"
+      }
+    },
+    {
+      "node_id": "graphify:styling_py",
+      "node_type": "concept",
+      "label": "styling.py",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "styling.py",
+        "source_location": "L1"
+      }
+    },
+    {
+      "node_id": "graphify:source_styling_inject_custom_css",
+      "node_type": "concept",
+      "label": "inject_custom_css()",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "code",
+        "source_file": "styling.py",
+        "source_location": "L3"
+      }
+    },
+    {
+      "node_id": "graphify:source_styling_rationale_4",
+      "node_type": "concept",
+      "label": "Injects a high-fidelity, premium CSS theme into the Streamlit application.",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "styling.py",
+        "source_location": "L4"
+      }
+    },
+    {
+      "node_id": "graphify:readme_md",
+      "node_type": "concept",
+      "label": "README.md",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L1"
+      }
+    },
+    {
+      "node_id": "graphify:source_readme_aether_scientific_calculator",
+      "node_type": "concept",
+      "label": "Aether Scientific Calculator \ud83e\uddee",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L1"
+      }
+    },
+    {
+      "node_id": "graphify:source_readme_features",
+      "node_type": "concept",
+      "label": "\u2728 Features",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L13"
+      }
+    },
+    {
+      "node_id": "graphify:source_readme_project_structure",
+      "node_type": "concept",
+      "label": "\ud83d\uddc2\ufe0f Project Structure",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L23"
+      }
+    },
+    {
+      "node_id": "graphify:source_readme_codeblock_1",
+      "node_type": "concept",
+      "label": "code:block1 (scientific_calculator/)",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L25"
+      }
+    },
+    {
+      "node_id": "graphify:source_readme_setup_and_installation",
+      "node_type": "concept",
+      "label": "\ud83d\ude80 Setup and Installation",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L35"
+      }
+    },
+    {
+      "node_id": "graphify:source_readme_1_pre_requisites",
+      "node_type": "concept",
+      "label": "1. Pre-requisites",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L37"
+      }
+    },
+    {
+      "node_id": "graphify:source_readme_2_install_dependencies",
+      "node_type": "concept",
+      "label": "2. Install dependencies",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L40"
+      }
+    },
+    {
+      "node_id": "graphify:source_readme_codeblock_2",
+      "node_type": "concept",
+      "label": "code:bash (pip install streamlit pandas)",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L42"
+      }
+    },
+    {
+      "node_id": "graphify:source_readme_3_start_the_application",
+      "node_type": "concept",
+      "label": "3. Start the application",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L46"
+      }
+    },
+    {
+      "node_id": "graphify:source_readme_codeblock_3",
+      "node_type": "concept",
+      "label": "code:bash (python -m streamlit run app.py)",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L48"
+      }
+    },
+    {
+      "node_id": "graphify:source_readme_supported_core_operations",
+      "node_type": "concept",
+      "label": "\ud83d\udee0\ufe0f Supported Core Operations",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "document",
+        "source_file": "README.md",
+        "source_location": "L55"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "graphify:graphify:edge:0",
+      "edge_type": "related",
+      "source_node": "graphify:app_py",
+      "target_node": "graphify:streamlit",
+      "score": 1.0,
+      "metadata": {
+        "relation": "imports",
+        "context": "import",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L1",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:1",
+      "edge_type": "related",
+      "source_node": "graphify:app_py",
+      "target_node": "graphify:pandas",
+      "score": 1.0,
+      "metadata": {
+        "relation": "imports",
+        "context": "import",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L2",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:2",
+      "edge_type": "related",
+      "source_node": "graphify:app_py",
+      "target_node": "graphify:calculator_core",
+      "score": 1.0,
+      "metadata": {
+        "relation": "imports_from",
+        "context": "import",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L3",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:3",
+      "edge_type": "related",
+      "source_node": "graphify:app_py",
+      "target_node": "graphify:styling",
+      "score": 1.0,
+      "metadata": {
+        "relation": "imports_from",
+        "context": "import",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L4",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:4",
+      "edge_type": "related",
+      "source_node": "graphify:app_py",
+      "target_node": "graphify:source_app_evaluate_now",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L29",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:5",
+      "edge_type": "related",
+      "source_node": "graphify:app_py",
+      "target_node": "graphify:source_app_handle_click",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L72",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:6",
+      "edge_type": "related",
+      "source_node": "graphify:source_app_handle_click",
+      "target_node": "graphify:source_app_evaluate_now",
+      "score": 1.0,
+      "metadata": {
+        "relation": "calls",
+        "context": "call",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L83",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:7",
+      "edge_type": "related",
+      "source_node": "graphify:source_app_rationale_30",
+      "target_node": "graphify:source_app_evaluate_now",
+      "score": 1.0,
+      "metadata": {
+        "relation": "rationale_for",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L30",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:8",
+      "edge_type": "related",
+      "source_node": "graphify:source_app_rationale_73",
+      "target_node": "graphify:source_app_handle_click",
+      "score": 1.0,
+      "metadata": {
+        "relation": "rationale_for",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L73",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:9",
+      "edge_type": "related",
+      "source_node": "graphify:calculator_core_py",
+      "target_node": "graphify:ast",
+      "score": 1.0,
+      "metadata": {
+        "relation": "imports",
+        "context": "import",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L1",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:10",
+      "edge_type": "related",
+      "source_node": "graphify:calculator_core_py",
+      "target_node": "graphify:math",
+      "score": 1.0,
+      "metadata": {
+        "relation": "imports",
+        "context": "import",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L2",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:11",
+      "edge_type": "related",
+      "source_node": "graphify:calculator_core_py",
+      "target_node": "graphify:operator",
+      "score": 1.0,
+      "metadata": {
+        "relation": "imports",
+        "context": "import",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L3",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:12",
+      "edge_type": "related",
+      "source_node": "graphify:calculator_core_py",
+      "target_node": "graphify:source_calculator_core_safeevaluator",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L5",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:13",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator",
+      "target_node": "graphify:source_calculator_core_safeevaluator_init",
+      "score": 1.0,
+      "metadata": {
+        "relation": "method",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L10",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:14",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator",
+      "target_node": "graphify:source_calculator_core_safeevaluator_get_functions",
+      "score": 1.0,
+      "metadata": {
+        "relation": "method",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L35",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:15",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator",
+      "target_node": "graphify:source_calculator_core_safeevaluator_evaluate",
+      "score": 1.0,
+      "metadata": {
+        "relation": "method",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L122",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:16",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator_evaluate",
+      "target_node": "graphify:str",
+      "score": 1.0,
+      "metadata": {
+        "relation": "references",
+        "context": "parameter_type",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L122",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:17",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator",
+      "target_node": "graphify:source_calculator_core_safeevaluator_visit_num",
+      "score": 1.0,
+      "metadata": {
+        "relation": "method",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L145",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:18",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator",
+      "target_node": "graphify:source_calculator_core_safeevaluator_visit_constant",
+      "score": 1.0,
+      "metadata": {
+        "relation": "method",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L148",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:19",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator",
+      "target_node": "graphify:source_calculator_core_safeevaluator_visit_binop",
+      "score": 1.0,
+      "metadata": {
+        "relation": "method",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L151",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:20",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator",
+      "target_node": "graphify:source_calculator_core_safeevaluator_visit_unaryop",
+      "score": 1.0,
+      "metadata": {
+        "relation": "method",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L166",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:21",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator",
+      "target_node": "graphify:source_calculator_core_safeevaluator_visit_name",
+      "score": 1.0,
+      "metadata": {
+        "relation": "method",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L173",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:22",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator",
+      "target_node": "graphify:source_calculator_core_safeevaluator_visit_call",
+      "score": 1.0,
+      "metadata": {
+        "relation": "method",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L181",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:23",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator",
+      "target_node": "graphify:source_calculator_core_safeevaluator_generic_visit",
+      "score": 1.0,
+      "metadata": {
+        "relation": "method",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L202",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:24",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator_visit_call",
+      "target_node": "graphify:source_calculator_core_safeevaluator_get_functions",
+      "score": 1.0,
+      "metadata": {
+        "relation": "calls",
+        "context": "call",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L186",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:25",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_safeevaluator_visit_call",
+      "target_node": "graphify:str",
+      "score": 1.0,
+      "metadata": {
+        "relation": "calls",
+        "context": "call",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L198",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:26",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_rationale_6",
+      "target_node": "graphify:source_calculator_core_safeevaluator",
+      "score": 1.0,
+      "metadata": {
+        "relation": "rationale_for",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L6",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:27",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_rationale_36",
+      "target_node": "graphify:source_calculator_core_safeevaluator_get_functions",
+      "score": 1.0,
+      "metadata": {
+        "relation": "rationale_for",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L36",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:28",
+      "edge_type": "related",
+      "source_node": "graphify:source_calculator_core_rationale_123",
+      "target_node": "graphify:source_calculator_core_safeevaluator_evaluate",
+      "score": 1.0,
+      "metadata": {
+        "relation": "rationale_for",
+        "confidence": "EXTRACTED",
+        "source_file": "calculator_core.py",
+        "source_location": "L123",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:29",
+      "edge_type": "related",
+      "source_node": "graphify:styling_py",
+      "target_node": "graphify:streamlit",
+      "score": 1.0,
+      "metadata": {
+        "relation": "imports",
+        "context": "import",
+        "confidence": "EXTRACTED",
+        "source_file": "styling.py",
+        "source_location": "L1",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:30",
+      "edge_type": "related",
+      "source_node": "graphify:styling_py",
+      "target_node": "graphify:source_styling_inject_custom_css",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "styling.py",
+        "source_location": "L3",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:31",
+      "edge_type": "related",
+      "source_node": "graphify:source_styling_rationale_4",
+      "target_node": "graphify:source_styling_inject_custom_css",
+      "score": 1.0,
+      "metadata": {
+        "relation": "rationale_for",
+        "confidence": "EXTRACTED",
+        "source_file": "styling.py",
+        "source_location": "L4",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:32",
+      "edge_type": "related",
+      "source_node": "graphify:readme_md",
+      "target_node": "graphify:source_readme_aether_scientific_calculator",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "README.md",
+        "source_location": "L1",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:33",
+      "edge_type": "related",
+      "source_node": "graphify:source_readme_aether_scientific_calculator",
+      "target_node": "graphify:source_readme_features",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "README.md",
+        "source_location": "L13",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:34",
+      "edge_type": "related",
+      "source_node": "graphify:source_readme_aether_scientific_calculator",
+      "target_node": "graphify:source_readme_project_structure",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "README.md",
+        "source_location": "L23",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:35",
+      "edge_type": "related",
+      "source_node": "graphify:source_readme_project_structure",
+      "target_node": "graphify:source_readme_codeblock_1",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "README.md",
+        "source_location": "L25",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:36",
+      "edge_type": "related",
+      "source_node": "graphify:source_readme_aether_scientific_calculator",
+      "target_node": "graphify:source_readme_setup_and_installation",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "README.md",
+        "source_location": "L35",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:37",
+      "edge_type": "related",
+      "source_node": "graphify:source_readme_setup_and_installation",
+      "target_node": "graphify:source_readme_1_pre_requisites",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "README.md",
+        "source_location": "L37",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:38",
+      "edge_type": "related",
+      "source_node": "graphify:source_readme_setup_and_installation",
+      "target_node": "graphify:source_readme_2_install_dependencies",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "README.md",
+        "source_location": "L40",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:39",
+      "edge_type": "related",
+      "source_node": "graphify:source_readme_2_install_dependencies",
+      "target_node": "graphify:source_readme_codeblock_2",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "README.md",
+        "source_location": "L42",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:40",
+      "edge_type": "related",
+      "source_node": "graphify:source_readme_setup_and_installation",
+      "target_node": "graphify:source_readme_3_start_the_application",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "README.md",
+        "source_location": "L46",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:41",
+      "edge_type": "related",
+      "source_node": "graphify:source_readme_3_start_the_application",
+      "target_node": "graphify:source_readme_codeblock_3",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "README.md",
+        "source_location": "L48",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:42",
+      "edge_type": "related",
+      "source_node": "graphify:source_readme_aether_scientific_calculator",
+      "target_node": "graphify:source_readme_supported_core_operations",
+      "score": 1.0,
+      "metadata": {
+        "relation": "contains",
+        "confidence": "EXTRACTED",
+        "source_file": "README.md",
+        "source_location": "L55",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:43",
+      "edge_type": "related",
+      "source_node": "graphify:app_py",
+      "target_node": "graphify:source_calculator_core_safeevaluator",
+      "score": 1.0,
+      "metadata": {
+        "relation": "imports",
+        "context": "import",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L3",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:44",
+      "edge_type": "related",
+      "source_node": "graphify:app_py",
+      "target_node": "graphify:source_styling_inject_custom_css",
+      "score": 1.0,
+      "metadata": {
+        "relation": "imports",
+        "context": "import",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L4",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:45",
+      "edge_type": "related",
+      "source_node": "graphify:source_app_evaluate_now",
+      "target_node": "graphify:source_calculator_core_safeevaluator",
+      "score": 1.0,
+      "metadata": {
+        "relation": "calls",
+        "context": "call",
+        "confidence": "EXTRACTED",
+        "source_file": "app.py",
+        "source_location": "L40",
+        "weight": 1.0
+      }
+    },
+    {
+      "edge_id": "graphify:graphify:edge:46",
+      "edge_type": "related",
+      "source_node": "graphify:source_app_evaluate_now",
+      "target_node": "graphify:str",
+      "score": 1.0,
+      "metadata": {
+        "relation": "calls",
+        "context": "call",
+        "confidence": "INFERRED",
+        "confidence_score": 0.8,
+        "source_file": "app.py",
+        "source_location": "L51",
+        "weight": 1.0
+      }
+    }
+  ],
+  "raw_output_path": "C:\\Users\\BIBEK\\OneDrive\\Desktop\\context_optimization_project\\data\\state\\repos\\d49b9ed3ec1241e7a84e35de42b5238f\\graphify_raw\\raw-output.json",
+  "warnings": [],
+  "generated_at": "2026-05-26T15:37:37.957000Z"
+}

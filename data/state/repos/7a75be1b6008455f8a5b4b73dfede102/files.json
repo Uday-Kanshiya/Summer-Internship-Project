@@ -1,0 +1,26 @@
+[
+  {
+    "path": "app.py",
+    "language": "python",
+    "size_bytes": 13099,
+    "line_count": 301,
+    "parse_status": "parsed",
+    "parse_error": null
+  },
+  {
+    "path": "calculator_core.py",
+    "language": "python",
+    "size_bytes": 6865,
+    "line_count": 203,
+    "parse_status": "parsed",
+    "parse_error": null
+  },
+  {
+    "path": "styling.py",
+    "language": "python",
+    "size_bytes": 7176,
+    "line_count": 220,
+    "parse_status": "parsed",
+    "parse_error": null
+  }
+]

@@ -1,0 +1,608 @@
+{
+  "query_id": "fce44667a6b74c30a7f2cbe8b2f734c4",
+  "repo_id": "7a75be1b6008455f8a5b4b73dfede102",
+  "session_id": "a965044f35cd4657972ed5546bdaf023",
+  "mode": "graph_optimized",
+  "query": "how exactly the multiplication works in the repo",
+  "status": "completed",
+  "answer": "Multiplication in the repository is handled within the `SafeEvaluator` class in `calculator_core.py`, which processes mathematical expressions using Python's Abstract Syntax Tree (AST) for safety and robustness.\n\nHere's the exact breakdown:\n\n1.  **Input Sanitation**: Before evaluation, the `evaluate` method (codegraph:method:ff9a2f088207) sanitizes the input expression string. It specifically replaces the common visual multiplication symbol '\u00d7' with the standard Python multiplication operator '\\*'.\n    *   **File**: `calculator_core.py`\n    *   **Line**: 126\n    *   **Snippet**: `expr_str = expr_str.replace('\u00d7', '*')`\n\n2.  **AST Parsing**: The sanitized string is then parsed into an Abstract Syntax Tree (AST) using `ast.parse(expr_str, mode='eval')` within the `evaluate` method. A multiplication operation will be represented by an `ast.Mult` node within this tree.\n    *   **File**: `calculator_core.py`\n    *   **Line**: 136\n\n3.  **Operator Mapping**: The `SafeEvaluator` class's `__init__` method (codegraph:method:15e81125afa4) initializes a dictionary `self.operators` that maps AST operator types to corresponding functions from Python's `operator` module. For multiplication, `ast.Mult` is explicitly mapped to `operator.mul`.\n    *   **File**: `calculator_core.py`\n    *   **Lines**: 17-27\n    *   **Snippet**:\n        ```python\n        self.operators = {\n            ast.Add: operator.add,\n            ast.Sub: operator.sub,\n            ast.Mult: operator.mul, # <-- This is where multiplication is defined\n            ast.Div: operator.truediv,\n            ast.FloorDiv: operator.floordiv,\n            ast.Mod: operator.mod,\n            ast.Pow: operator.pow,\n            ast.USub: operator.neg,\n            ast.UAdd: lambda x: x,\n        }\n        ```\n    *   **Relevant imports**: `codegraph:import:0bf697f98dad:ast` and `codegraph:import:2bfa55e4ee19:operator`\n\n4.  **AST Traversal and Execution**: When the AST is traversed, the `visit_BinOp` method (codegraph:method:861a2578f51a) is called for binary operations.\n    *   It identifies the type of the operator (`op_type = type(node.op)`).\n    *   It recursively visits the left and right operands (`left = self.visit(node.left)`, `right = self.visit(node.right)`) to get their values.\n    *   Finally, it retrieves the appropriate function from `self.operators` using the `op_type` (which would be `ast.Mult` for multiplication) and applies it to the `left` and `right` values.\n    *   **File**: `calculator_core.py`\n    *   **Lines**: 151-164\n    *   **Snippet**:\n        ```python\n        def visit_BinOp(self, node):\n            op_type = type(node.op)\n            if op_type not in self.operators:\n                raise TypeError(f\"Unsupported operator: {op_type.__name__}\")\n            \n            left = self.visit(node.left)\n            right = self.visit(node.right)\n            \n            try:\n                return self.operators[op_type](left, right) # <-- Multiplication happens here\n            except ZeroDivisionError:\n                raise ValueError(\"Division by zero\")\n            except OverflowError:\n                raise ValueError(\"Result overflow\")\n        ```\n\nIn summary, multiplication is handled by:\n1.  Replacing `\u00d7` with `*` in the input string.\n2.  Parsing the expression into an AST, where multiplication is an `ast.Mult` node.\n3.  Mapping the `ast.Mult` node type to the standard `operator.mul` function.\n4.  Executing `operator.mul(left_operand, right_operand)` when traversing the AST.",
+  "error": null,
+  "source_snippets": [
+    {
+      "file_path": "styling.py",
+      "line_start": 3,
+      "line_end": 220,
+      "text": "def inject_custom_css():\n    \"\"\"\n    Injects a high-fidelity, premium CSS theme into the Streamlit application.\n    This replaces standard Streamlit styles with a gorgeous glassmorphic dark UI.\n    \"\"\"\n    css_content = \"\"\"\n    <style>\n    /* Import modern Google Fonts */\n    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');\n\n    /* Background and Layout Overrides */\n    .stApp {\n        background: radial-gradient(circle at 50% 50%, #171a25 0%, #08090d 100%) !important;\n        font-family: 'Outfit', sans-serif !important;\n        color: #f1f5f9 !important;\n    }\n    \n    /* Remove default Streamlit header and footer */\n    header {visibility: hidden;}\n    footer {visibility: hidden;}\n    #MainMenu {visibility: hidden;}\n    \n    /* Main container card */\n    .calc-card {\n        background: rgba(22, 28, 41, 0.45);\n        backdrop-filter: blur(20px);\n        -webkit-backdrop-filter: blur(20px);\n        border: 1px solid rgba(255, 255, 255, 0.05);\n        border-radius: 28px;\n        padding: 30px;\n        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),\n                    0 0 40px rgba(0, 242, 254, 0.03);\n        margin: 20px auto;\n        max-width: 580px;\n    }\n\n    /* Screen display */\n    .led-screen {\n        background: #06070a;\n        border: 1px solid rgba(255, 255, 255, 0.03);\n        border-radius: 20px;\n        padding: 22px 26px;\n        box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.8),\n                    0 0 1px rgba(255, 255, 255, 0.1);\n        margin-bottom: 25px;\n        text-align: right;\n        min-height: 120px;\n        display: flex;\n        flex-direction: column;\n        justify-content: space-between;\n        overflow: hidden;\n    }\n    \n    .screen-formula {\n        font-family: 'JetBrains Mono', monospace;\n        font-size: 1.1rem;\n        color: #64748b;\n        overflow-x: auto;\n        white-space: nowrap;\n        min-height: 28px;\n        letter-spacing: 0.5px;\n    }\n    \n    .screen-result {\n        font-family: 'Orbitron', sans-serif;\n        font-size: 2.5rem;\n        font-weight: 700;\n        color: #00f2fe;\n \n...",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 5,
+      "line_end": 203,
+      "text": "class SafeEvaluator(ast.NodeVisitor):\n    \"\"\"\n    A safe mathematical expression evaluator using Python's AST (Abstract Syntax Tree).\n    This avoids the safety issues of raw eval() while providing robust calculations.\n    \"\"\"\n    def __init__(self, angle_mode=\"Radians\", variables=None):\n        self.angle_mode = angle_mode\n        self.variables = variables or {}\n        \n        # Supported operators mapping\n        self.operators = {\n            ast.Add: operator.add,\n            ast.Sub: operator.sub,\n            ast.Mult: operator.mul,\n            ast.Div: operator.truediv,\n            ast.FloorDiv: operator.floordiv,\n            ast.Mod: operator.mod,\n            ast.Pow: operator.pow,\n            ast.USub: operator.neg,\n            ast.UAdd: lambda x: x,\n        }\n        \n        # Supported constants\n        self.constants = {\n            'pi': math.pi,\n            'PI': math.pi,\n            'e': math.e,\n            'E': math.e,\n        }\n\n    def get_functions(self):\n        \"\"\"\n        Returns functions available in the calculator, taking into account \n        the current angle mode (Degrees vs Radians).\n        \"\"\"\n        is_deg = (self.angle_mode.lower() == \"degrees\")\n        \n        def sin_val(x):\n            return math.sin(math.radians(x) if is_deg else x)\n            \n        def cos_val(x):\n            return math.cos(math.radians(x) if is_deg else x)\n            \n        def tan_val(x):\n            # Handle tan(90), tan(270) undefined cases in degrees\n            if is_deg:\n                x_mod = x % 180\n                if abs(x_mod - 90) < 1e-9:\n                    raise ValueError(\"tan(x) is undefined\")\n            return math.tan(math.radians(x) if is_deg else x)\n\n        def asin_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"asin domain is [-1, 1]\")\n            val = math.asin(x)\n            return math.degrees(val) if is_deg else val\n\n        def acos_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"acos domain is [-1, 1]\")\n            val = math.acos(x)\n            return math.degrees(val) if is_deg else val\n\n        def atan_val(x):\n            val = math.atan(x)\n            retur\n...",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 35,
+      "line_end": 120,
+      "text": "    def get_functions(self):\n        \"\"\"\n        Returns functions available in the calculator, taking into account \n        the current angle mode (Degrees vs Radians).\n        \"\"\"\n        is_deg = (self.angle_mode.lower() == \"degrees\")\n        \n        def sin_val(x):\n            return math.sin(math.radians(x) if is_deg else x)\n            \n        def cos_val(x):\n            return math.cos(math.radians(x) if is_deg else x)\n            \n        def tan_val(x):\n            # Handle tan(90), tan(270) undefined cases in degrees\n            if is_deg:\n                x_mod = x % 180\n                if abs(x_mod - 90) < 1e-9:\n                    raise ValueError(\"tan(x) is undefined\")\n            return math.tan(math.radians(x) if is_deg else x)\n\n        def asin_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"asin domain is [-1, 1]\")\n            val = math.asin(x)\n            return math.degrees(val) if is_deg else val\n\n        def acos_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"acos domain is [-1, 1]\")\n            val = math.acos(x)\n            return math.degrees(val) if is_deg else val\n\n        def atan_val(x):\n            val = math.atan(x)\n            return math.degrees(val) if is_deg else val\n\n        def fact_val(x):\n            if x < 0 or not float(x).is_integer():\n                raise ValueError(\"Factorial is only defined for non-negative integers\")\n            if x > 1000:\n                raise OverflowError(\"Factorial value too large to compute\")\n            return math.factorial(int(x))\n\n        def sqrt_val(x):\n            if x < 0:\n                raise ValueError(\"Square root of negative number is undefined (real domain)\")\n            return math.sqrt(x)\n\n        def cbrt_val(x):\n            return math.copysign(abs(x) ** (1/3), x)\n\n        def log_val(x):\n            if x <= 0:\n                raise ValueError(\"Logarithm domain error (x must be > 0)\")\n            return math.log10(x)\n\n        def ln_val(x):\n            if x <= 0:\n                raise ValueError(\"Logarithm domain error (x must be > 0)\")\n            return math.log(x)\n\n        def log2_val(x):\n            if x <= 0:\n     \n...",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "styling.py",
+      "line_start": 1,
+      "line_end": 220,
+      "text": "import streamlit as st\n\ndef inject_custom_css():\n    \"\"\"\n    Injects a high-fidelity, premium CSS theme into the Streamlit application.\n    This replaces standard Streamlit styles with a gorgeous glassmorphic dark UI.\n    \"\"\"\n    css_content = \"\"\"\n    <style>\n    /* Import modern Google Fonts */\n    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');\n\n    /* Background and Layout Overrides */\n    .stApp {\n        background: radial-gradient(circle at 50% 50%, #171a25 0%, #08090d 100%) !important;\n        font-family: 'Outfit', sans-serif !important;\n        color: #f1f5f9 !important;\n    }\n    \n    /* Remove default Streamlit header and footer */\n    header {visibility: hidden;}\n    footer {visibility: hidden;}\n    #MainMenu {visibility: hidden;}\n    \n    /* Main container card */\n    .calc-card {\n        background: rgba(22, 28, 41, 0.45);\n        backdrop-filter: blur(20px);\n        -webkit-backdrop-filter: blur(20px);\n        border: 1px solid rgba(255, 255, 255, 0.05);\n        border-radius: 28px;\n        padding: 30px;\n        box-shadow: 0 25px 50px -12px rgba(0, ",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 1,
+      "line_end": 203,
+      "text": "import ast\nimport math\nimport operator\n\nclass SafeEvaluator(ast.NodeVisitor):\n    \"\"\"\n    A safe mathematical expression evaluator using Python's AST (Abstract Syntax Tree).\n    This avoids the safety issues of raw eval() while providing robust calculations.\n    \"\"\"\n    def __init__(self, angle_mode=\"Radians\", variables=None):\n        self.angle_mode = angle_mode\n        self.variables = variables or {}\n        \n        # Supported operators mapping\n        self.operators = {\n            ast.Add: operator.add,\n            ast.Sub: operator.sub,\n            ast.Mult: operator.mul,\n            ast.Div: operator.truediv,\n            ast.FloorDiv: operator.floordiv,\n            ast.Mod: operator.mod,\n            ast.Pow: operator.pow,\n            ast.USub: operator.neg,\n            ast.UAdd: lambda x: x,\n        }\n        \n        # Supported constants\n        self.constants = {\n            'pi': math.pi,\n            'PI': math.pi,\n            'e': math.e,\n            'E': math.e,\n        }\n\n    def get_functions(self):\n        \"\"\"\n        Returns functions available in the calculator, taking into account \n        the current angle mode (Degrees vs Radians).\n        \"\"\"\n        is_deg ",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 10,
+      "line_end": 33,
+      "text": "    def __init__(self, angle_mode=\"Radians\", variables=None):\n        self.angle_mode = angle_mode\n        self.variables = variables or {}\n        \n        # Supported operators mapping\n        self.operators = {\n            ast.Add: operator.add,\n            ast.Sub: operator.sub,\n            ast.Mult: operator.mul,\n            ast.Div: operator.truediv,\n            ast.FloorDiv: operator.floordiv,\n            ast.Mod: operator.mod,\n            ast.Pow: operator.pow,\n            ast.USub: operator.neg,\n            ast.UAdd: lambda x: x,\n        }\n        \n        # Supported constants\n        self.constants = {\n            'pi': math.pi,\n            'PI': math.pi,\n            'e': math.e,\n            'E': math.e,\n        }",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 122,
+      "line_end": 143,
+      "text": "    def evaluate(self, expr_str: str):\n        \"\"\"\n        Sanitizes and evaluates the expression string safely.\n        \"\"\"\n        # 1. Clean visual operators to python operators\n        expr_str = expr_str.replace('^', '**')\n        expr_str = expr_str.replace('\u03c0', 'pi')\n        expr_str = expr_str.replace('\u00d7', '*')\n        expr_str = expr_str.replace('\u00f7', '/')\n        \n        if not expr_str.strip():\n            return \"\"\n\n        try:\n            node = ast.parse(expr_str, mode='eval')\n            return self.visit(node.body)\n        except SyntaxError as e:\n            raise ValueError(\"Invalid syntax\") from e\n        except ZeroDivisionError:\n            raise ValueError(\"Division by zero\")\n        except OverflowError:\n            raise ValueError(\"Result too large (overflow)\")",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 145,
+      "line_end": 146,
+      "text": "    def visit_Num(self, node):\n        return node.n",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 148,
+      "line_end": 149,
+      "text": "    def visit_Constant(self, node):\n        return node.value",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 151,
+      "line_end": 164,
+      "text": "    def visit_BinOp(self, node):\n        op_type = type(node.op)\n        if op_type not in self.operators:\n            raise TypeError(f\"Unsupported operator: {op_type.__name__}\")\n        \n        left = self.visit(node.left)\n        right = self.visit(node.right)\n        \n        try:\n            return self.operators[op_type](left, right)\n        except ZeroDivisionError:\n            raise ValueError(\"Division by zero\")\n        except OverflowError:\n            raise ValueError(\"Result overflow\")",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 166,
+      "line_end": 171,
+      "text": "    def visit_UnaryOp(self, node):\n        op_type = type(node.op)\n        if op_type not in self.operators:\n            raise TypeError(f\"Unsupported operator: {op_type.__name__}\")\n        operand = self.visit(node.operand)\n        return self.operators[op_type](operand)",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 173,
+      "line_end": 179,
+      "text": "    def visit_Name(self, node):\n        name = node.id\n        if name in self.variables:\n            return self.variables[name]\n        if name in self.constants:\n            return self.constants[name]\n        raise NameError(f\"Undefined symbol: '{name}'\")",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 181,
+      "line_end": 200,
+      "text": "    def visit_Call(self, node):\n        if not isinstance(node.func, ast.Name):\n            raise TypeError(\"Unsupported function syntax\")\n        \n        func_name = node.func.id\n        funcs = self.get_functions()\n        \n        if func_name not in funcs:\n            raise NameError(f\"Unsupported function: '{func_name}'\")\n        \n        if len(node.args) != 1:\n            raise TypeError(f\"Function '{func_name}' expects exactly 1 argument\")\n        \n        arg_val = self.visit(node.args[0])\n        try:\n            return funcs[func_name](arg_val)\n        except ValueError as ve:\n            raise ValueError(f\"Math domain error in {func_name}: {str(ve)}\")\n        except OverflowError:\n            raise ValueError(f\"Overflow error in {func_name}\")",
+      "score": null,
+      "source": "graph"
+    },
+    {
+      "file_path": "calculator_core.py",
+      "line_start": 202,
+      "line_end": 203,
+      "text": "    def generic_visit(self, node):\n        raise TypeError(f\"Unsupported operation: {type(node).__name__}\")",
+      "score": null,
+      "source": "graph"
+    }
+  ],
+  "selected_nodes": [
+    {
+      "node_id": "codegraph:function:d814d3842102:styling.inject_custom_css",
+      "node_type": "function",
+      "label": "inject_custom_css",
+      "file_path": "styling.py",
+      "line_start": 3,
+      "line_end": 220,
+      "source_snippet": "def inject_custom_css():\n    \"\"\"\n    Injects a high-fidelity, premium CSS theme into the Streamlit application.\n    This replaces standard Streamlit styles with a gorgeous glassmorphic dark UI.\n    \"\"\"\n    css_content = \"\"\"\n    <style>\n    /* Import modern Google Fonts */\n    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');\n\n    /* Background and Layout Overrides */\n    .stApp {\n        background: radial-gradient(circle at 50% 50%, #171a25 0%, #08090d 100%) !important;\n        font-family: 'Outfit', sans-serif !important;\n        color: #f1f5f9 !important;\n    }\n    \n    /* Remove default Streamlit header and footer */\n    header {visibility: hidden;}\n    footer {visibility: hidden;}\n    #MainMenu {visibility: hidden;}\n    \n    /* Main container card */\n    .calc-card {\n        background: rgba(22, 28, 41, 0.45);\n        backdrop-filter: blur(20px);\n        -webkit-backdrop-filter: blur(20px);\n        border: 1px solid rgba(255, 255, 255, 0.05);\n        border-radius: 28px;\n        padding: 30px;\n        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),\n                    0 0 40px rgba(0, 242, 254, 0.03);\n        margin: 20px auto;\n        max-width: 580px;\n    }\n\n    /* Screen display */\n    .led-screen {\n        background: #06070a;\n        border: 1px solid rgba(255, 255, 255, 0.03);\n        border-radius: 20px;\n        padding: 22px 26px;\n        box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.8),\n                    0 0 1px rgba(255, 255, 255, 0.1);\n        margin-bottom: 25px;\n        text-align: right;\n        min-height: 120px;\n        display: flex;\n        flex-direction: column;\n        justify-content: space-between;\n        overflow: hidden;\n    }\n    \n    .screen-formula {\n        font-family: 'JetBrains Mono', monospace;\n        font-size: 1.1rem;\n        color: #64748b;\n        overflow-x: auto;\n        white-space: nowrap;\n        min-height: 28px;\n        letter-spacing: 0.5px;\n    }\n    \n    .screen-result {\n        font-family: 'Orbitron', sans-serif;\n        font-size: 2.5rem;\n        font-weight: 700;\n        color: #00f2fe;\n \n...",
+      "metadata": {
+        "qualified_name": "styling.inject_custom_css",
+        "ast_type": "FunctionDef"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_rationale_36",
+      "node_type": "concept",
+      "label": "Returns functions available in the calculator, taking into account          the",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "calculator_core.py",
+        "source_location": "L36"
+      }
+    },
+    {
+      "node_id": "graphify:source_styling_rationale_4",
+      "node_type": "concept",
+      "label": "Injects a high-fidelity, premium CSS theme into the Streamlit application.",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "styling.py",
+        "source_location": "L4"
+      }
+    },
+    {
+      "node_id": "graphify:source_app_rationale_30",
+      "node_type": "concept",
+      "label": "Evaluates the current formula expression in session state,      updating result",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "app.py",
+        "source_location": "L30"
+      }
+    },
+    {
+      "node_id": "graphify:source_app_rationale_73",
+      "node_type": "concept",
+      "label": "Handles standard and complex button clicks on the interactive keypad.",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "app.py",
+        "source_location": "L73"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_rationale_6",
+      "node_type": "concept",
+      "label": "A safe mathematical expression evaluator using Python's AST (Abstract Syntax Tre",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "calculator_core.py",
+        "source_location": "L6"
+      }
+    },
+    {
+      "node_id": "graphify:source_calculator_core_rationale_123",
+      "node_type": "concept",
+      "label": "Sanitizes and evaluates the expression string safely.",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "file_type": "rationale",
+        "source_file": "calculator_core.py",
+        "source_location": "L123"
+      }
+    },
+    {
+      "node_id": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "node_type": "class",
+      "label": "SafeEvaluator",
+      "file_path": "calculator_core.py",
+      "line_start": 5,
+      "line_end": 203,
+      "source_snippet": "class SafeEvaluator(ast.NodeVisitor):\n    \"\"\"\n    A safe mathematical expression evaluator using Python's AST (Abstract Syntax Tree).\n    This avoids the safety issues of raw eval() while providing robust calculations.\n    \"\"\"\n    def __init__(self, angle_mode=\"Radians\", variables=None):\n        self.angle_mode = angle_mode\n        self.variables = variables or {}\n        \n        # Supported operators mapping\n        self.operators = {\n            ast.Add: operator.add,\n            ast.Sub: operator.sub,\n            ast.Mult: operator.mul,\n            ast.Div: operator.truediv,\n            ast.FloorDiv: operator.floordiv,\n            ast.Mod: operator.mod,\n            ast.Pow: operator.pow,\n            ast.USub: operator.neg,\n            ast.UAdd: lambda x: x,\n        }\n        \n        # Supported constants\n        self.constants = {\n            'pi': math.pi,\n            'PI': math.pi,\n            'e': math.e,\n            'E': math.e,\n        }\n\n    def get_functions(self):\n        \"\"\"\n        Returns functions available in the calculator, taking into account \n        the current angle mode (Degrees vs Radians).\n        \"\"\"\n        is_deg = (self.angle_mode.lower() == \"degrees\")\n        \n        def sin_val(x):\n            return math.sin(math.radians(x) if is_deg else x)\n            \n        def cos_val(x):\n            return math.cos(math.radians(x) if is_deg else x)\n            \n        def tan_val(x):\n            # Handle tan(90), tan(270) undefined cases in degrees\n            if is_deg:\n                x_mod = x % 180\n                if abs(x_mod - 90) < 1e-9:\n                    raise ValueError(\"tan(x) is undefined\")\n            return math.tan(math.radians(x) if is_deg else x)\n\n        def asin_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"asin domain is [-1, 1]\")\n            val = math.asin(x)\n            return math.degrees(val) if is_deg else val\n\n        def acos_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"acos domain is [-1, 1]\")\n            val = math.acos(x)\n            return math.degrees(val) if is_deg else val\n\n        def atan_val(x):\n            val = math.atan(x)\n            retur\n...",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator",
+        "ast_type": "ClassDef"
+      }
+    },
+    {
+      "node_id": "codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "node_type": "method",
+      "label": "get_functions",
+      "file_path": "calculator_core.py",
+      "line_start": 35,
+      "line_end": 120,
+      "source_snippet": "    def get_functions(self):\n        \"\"\"\n        Returns functions available in the calculator, taking into account \n        the current angle mode (Degrees vs Radians).\n        \"\"\"\n        is_deg = (self.angle_mode.lower() == \"degrees\")\n        \n        def sin_val(x):\n            return math.sin(math.radians(x) if is_deg else x)\n            \n        def cos_val(x):\n            return math.cos(math.radians(x) if is_deg else x)\n            \n        def tan_val(x):\n            # Handle tan(90), tan(270) undefined cases in degrees\n            if is_deg:\n                x_mod = x % 180\n                if abs(x_mod - 90) < 1e-9:\n                    raise ValueError(\"tan(x) is undefined\")\n            return math.tan(math.radians(x) if is_deg else x)\n\n        def asin_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"asin domain is [-1, 1]\")\n            val = math.asin(x)\n            return math.degrees(val) if is_deg else val\n\n        def acos_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"acos domain is [-1, 1]\")\n            val = math.acos(x)\n            return math.degrees(val) if is_deg else val\n\n        def atan_val(x):\n            val = math.atan(x)\n            return math.degrees(val) if is_deg else val\n\n        def fact_val(x):\n            if x < 0 or not float(x).is_integer():\n                raise ValueError(\"Factorial is only defined for non-negative integers\")\n            if x > 1000:\n                raise OverflowError(\"Factorial value too large to compute\")\n            return math.factorial(int(x))\n\n        def sqrt_val(x):\n            if x < 0:\n                raise ValueError(\"Square root of negative number is undefined (real domain)\")\n            return math.sqrt(x)\n\n        def cbrt_val(x):\n            return math.copysign(abs(x) ** (1/3), x)\n\n        def log_val(x):\n            if x <= 0:\n                raise ValueError(\"Logarithm domain error (x must be > 0)\")\n            return math.log10(x)\n\n        def ln_val(x):\n            if x <= 0:\n                raise ValueError(\"Logarithm domain error (x must be > 0)\")\n            return math.log(x)\n\n        def log2_val(x):\n            if x <= 0:\n     \n...",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.get_functions",
+        "ast_type": "FunctionDef"
+      }
+    },
+    {
+      "node_id": "codegraph:module:894c4c8c5919:styling",
+      "node_type": "module",
+      "label": "styling",
+      "file_path": "styling.py",
+      "line_start": 1,
+      "line_end": 220,
+      "source_snippet": "import streamlit as st\n\ndef inject_custom_css():\n    \"\"\"\n    Injects a high-fidelity, premium CSS theme into the Streamlit application.\n    This replaces standard Streamlit styles with a gorgeous glassmorphic dark UI.\n    \"\"\"\n    css_content = \"\"\"\n    <style>\n    /* Import modern Google Fonts */\n    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');\n\n    /* Background and Layout Overrides */\n    .stApp {\n        background: radial-gradient(circle at 50% 50%, #171a25 0%, #08090d 100%) !important;\n        font-family: 'Outfit', sans-serif !important;\n        color: #f1f5f9 !important;\n    }\n    \n    /* Remove default Streamlit header and footer */\n    header {visibility: hidden;}\n    footer {visibility: hidden;}\n    #MainMenu {visibility: hidden;}\n    \n    /* Main container card */\n    .calc-card {\n        background: rgba(22, 28, 41, 0.45);\n        backdrop-filter: blur(20px);\n        -webkit-backdrop-filter: blur(20px);\n        border: 1px solid rgba(255, 255, 255, 0.05);\n        border-radius: 28px;\n        padding: 30px;\n        box-shadow: 0 25px 50px -12px rgba(0, ",
+      "metadata": {
+        "path": "styling.py"
+      }
+    },
+    {
+      "node_id": "codegraph:module:77a4cbc21319:calculator_core",
+      "node_type": "module",
+      "label": "calculator_core",
+      "file_path": "calculator_core.py",
+      "line_start": 1,
+      "line_end": 203,
+      "source_snippet": "import ast\nimport math\nimport operator\n\nclass SafeEvaluator(ast.NodeVisitor):\n    \"\"\"\n    A safe mathematical expression evaluator using Python's AST (Abstract Syntax Tree).\n    This avoids the safety issues of raw eval() while providing robust calculations.\n    \"\"\"\n    def __init__(self, angle_mode=\"Radians\", variables=None):\n        self.angle_mode = angle_mode\n        self.variables = variables or {}\n        \n        # Supported operators mapping\n        self.operators = {\n            ast.Add: operator.add,\n            ast.Sub: operator.sub,\n            ast.Mult: operator.mul,\n            ast.Div: operator.truediv,\n            ast.FloorDiv: operator.floordiv,\n            ast.Mod: operator.mod,\n            ast.Pow: operator.pow,\n            ast.USub: operator.neg,\n            ast.UAdd: lambda x: x,\n        }\n        \n        # Supported constants\n        self.constants = {\n            'pi': math.pi,\n            'PI': math.pi,\n            'e': math.e,\n            'E': math.e,\n        }\n\n    def get_functions(self):\n        \"\"\"\n        Returns functions available in the calculator, taking into account \n        the current angle mode (Degrees vs Radians).\n        \"\"\"\n        is_deg ",
+      "metadata": {
+        "path": "calculator_core.py"
+      }
+    },
+    {
+      "node_id": "codegraph:method:15e81125afa4:calculator_core.SafeEvaluator.__init__",
+      "node_type": "method",
+      "label": "__init__",
+      "file_path": "calculator_core.py",
+      "line_start": 10,
+      "line_end": 33,
+      "source_snippet": "    def __init__(self, angle_mode=\"Radians\", variables=None):\n        self.angle_mode = angle_mode\n        self.variables = variables or {}\n        \n        # Supported operators mapping\n        self.operators = {\n            ast.Add: operator.add,\n            ast.Sub: operator.sub,\n            ast.Mult: operator.mul,\n            ast.Div: operator.truediv,\n            ast.FloorDiv: operator.floordiv,\n            ast.Mod: operator.mod,\n            ast.Pow: operator.pow,\n            ast.USub: operator.neg,\n            ast.UAdd: lambda x: x,\n        }\n        \n        # Supported constants\n        self.constants = {\n            'pi': math.pi,\n            'PI': math.pi,\n            'e': math.e,\n            'E': math.e,\n        }",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.__init__",
+        "ast_type": "FunctionDef"
+      }
+    },
+    {
+      "node_id": "codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "node_type": "method",
+      "label": "evaluate",
+      "file_path": "calculator_core.py",
+      "line_start": 122,
+      "line_end": 143,
+      "source_snippet": "    def evaluate(self, expr_str: str):\n        \"\"\"\n        Sanitizes and evaluates the expression string safely.\n        \"\"\"\n        # 1. Clean visual operators to python operators\n        expr_str = expr_str.replace('^', '**')\n        expr_str = expr_str.replace('\u03c0', 'pi')\n        expr_str = expr_str.replace('\u00d7', '*')\n        expr_str = expr_str.replace('\u00f7', '/')\n        \n        if not expr_str.strip():\n            return \"\"\n\n        try:\n            node = ast.parse(expr_str, mode='eval')\n            return self.visit(node.body)\n        except SyntaxError as e:\n            raise ValueError(\"Invalid syntax\") from e\n        except ZeroDivisionError:\n            raise ValueError(\"Division by zero\")\n        except OverflowError:\n            raise ValueError(\"Result too large (overflow)\")",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.evaluate",
+        "ast_type": "FunctionDef"
+      }
+    },
+    {
+      "node_id": "codegraph:method:9ec01458841b:calculator_core.SafeEvaluator.visit_Num",
+      "node_type": "method",
+      "label": "visit_Num",
+      "file_path": "calculator_core.py",
+      "line_start": 145,
+      "line_end": 146,
+      "source_snippet": "    def visit_Num(self, node):\n        return node.n",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_Num",
+        "ast_type": "FunctionDef"
+      }
+    },
+    {
+      "node_id": "codegraph:method:8c06a11d4df4:calculator_core.SafeEvaluator.visit_Constant",
+      "node_type": "method",
+      "label": "visit_Constant",
+      "file_path": "calculator_core.py",
+      "line_start": 148,
+      "line_end": 149,
+      "source_snippet": "    def visit_Constant(self, node):\n        return node.value",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_Constant",
+        "ast_type": "FunctionDef"
+      }
+    },
+    {
+      "node_id": "codegraph:method:861a2578f51a:calculator_core.SafeEvaluator.visit_BinOp",
+      "node_type": "method",
+      "label": "visit_BinOp",
+      "file_path": "calculator_core.py",
+      "line_start": 151,
+      "line_end": 164,
+      "source_snippet": "    def visit_BinOp(self, node):\n        op_type = type(node.op)\n        if op_type not in self.operators:\n            raise TypeError(f\"Unsupported operator: {op_type.__name__}\")\n        \n        left = self.visit(node.left)\n        right = self.visit(node.right)\n        \n        try:\n            return self.operators[op_type](left, right)\n        except ZeroDivisionError:\n            raise ValueError(\"Division by zero\")\n        except OverflowError:\n            raise ValueError(\"Result overflow\")",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_BinOp",
+        "ast_type": "FunctionDef"
+      }
+    },
+    {
+      "node_id": "codegraph:method:2aa814213bb0:calculator_core.SafeEvaluator.visit_UnaryOp",
+      "node_type": "method",
+      "label": "visit_UnaryOp",
+      "file_path": "calculator_core.py",
+      "line_start": 166,
+      "line_end": 171,
+      "source_snippet": "    def visit_UnaryOp(self, node):\n        op_type = type(node.op)\n        if op_type not in self.operators:\n            raise TypeError(f\"Unsupported operator: {op_type.__name__}\")\n        operand = self.visit(node.operand)\n        return self.operators[op_type](operand)",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_UnaryOp",
+        "ast_type": "FunctionDef"
+      }
+    },
+    {
+      "node_id": "codegraph:method:e6d1696d1f24:calculator_core.SafeEvaluator.visit_Name",
+      "node_type": "method",
+      "label": "visit_Name",
+      "file_path": "calculator_core.py",
+      "line_start": 173,
+      "line_end": 179,
+      "source_snippet": "    def visit_Name(self, node):\n        name = node.id\n        if name in self.variables:\n            return self.variables[name]\n        if name in self.constants:\n            return self.constants[name]\n        raise NameError(f\"Undefined symbol: '{name}'\")",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_Name",
+        "ast_type": "FunctionDef"
+      }
+    },
+    {
+      "node_id": "codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "node_type": "method",
+      "label": "visit_Call",
+      "file_path": "calculator_core.py",
+      "line_start": 181,
+      "line_end": 200,
+      "source_snippet": "    def visit_Call(self, node):\n        if not isinstance(node.func, ast.Name):\n            raise TypeError(\"Unsupported function syntax\")\n        \n        func_name = node.func.id\n        funcs = self.get_functions()\n        \n        if func_name not in funcs:\n            raise NameError(f\"Unsupported function: '{func_name}'\")\n        \n        if len(node.args) != 1:\n            raise TypeError(f\"Function '{func_name}' expects exactly 1 argument\")\n        \n        arg_val = self.visit(node.args[0])\n        try:\n            return funcs[func_name](arg_val)\n        except ValueError as ve:\n            raise ValueError(f\"Math domain error in {func_name}: {str(ve)}\")\n        except OverflowError:\n            raise ValueError(f\"Overflow error in {func_name}\")",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_Call",
+        "ast_type": "FunctionDef"
+      }
+    },
+    {
+      "node_id": "codegraph:method:5088debf287f:calculator_core.SafeEvaluator.generic_visit",
+      "node_type": "method",
+      "label": "generic_visit",
+      "file_path": "calculator_core.py",
+      "line_start": 202,
+      "line_end": 203,
+      "source_snippet": "    def generic_visit(self, node):\n        raise TypeError(f\"Unsupported operation: {type(node).__name__}\")",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.generic_visit",
+        "ast_type": "FunctionDef"
+      }
+    },
+    {
+      "node_id": "codegraph:import:0bf697f98dad:ast",
+      "node_type": "import",
+      "label": "ast",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "module": "ast",
+        "external": true
+      }
+    },
+    {
+      "node_id": "codegraph:import:11eba99f38a3:math",
+      "node_type": "import",
+      "label": "math",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "module": "math",
+        "external": true
+      }
+    },
+    {
+      "node_id": "codegraph:import:2bfa55e4ee19:operator",
+      "node_type": "import",
+      "label": "operator",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "module": "operator",
+        "external": true
+      }
+    },
+    {
+      "node_id": "codegraph:import:571966765eb8:st",
+      "node_type": "import",
+      "label": "st",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "module": "streamlit",
+        "external": true
+      }
+    }
+  ],
+  "selected_edges": [
+    {
+      "edge_id": "codegraph:edge:e505a62f5327710c",
+      "edge_type": "contains",
+      "source_node": "codegraph:module:77a4cbc21319:calculator_core",
+      "target_node": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:ab6573aeef00d706",
+      "edge_type": "contains",
+      "source_node": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "codegraph:method:15e81125afa4:calculator_core.SafeEvaluator.__init__",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:97746a40a246884a",
+      "edge_type": "contains",
+      "source_node": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:bcaf867a4c7c5132",
+      "edge_type": "contains",
+      "source_node": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:f9ab871a93d10a60",
+      "edge_type": "contains",
+      "source_node": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "codegraph:method:9ec01458841b:calculator_core.SafeEvaluator.visit_Num",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:8872cd6e6a93cab8",
+      "edge_type": "contains",
+      "source_node": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "codegraph:method:8c06a11d4df4:calculator_core.SafeEvaluator.visit_Constant",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:7885d4176301ccbd",
+      "edge_type": "contains",
+      "source_node": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "codegraph:method:861a2578f51a:calculator_core.SafeEvaluator.visit_BinOp",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:13553225f4d44c39",
+      "edge_type": "contains",
+      "source_node": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "codegraph:method:2aa814213bb0:calculator_core.SafeEvaluator.visit_UnaryOp",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:2b4bc7188cee5b58",
+      "edge_type": "contains",
+      "source_node": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "codegraph:method:e6d1696d1f24:calculator_core.SafeEvaluator.visit_Name",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:ddcd55edad619bee",
+      "edge_type": "contains",
+      "source_node": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:1bb9f4c112d3c4ce",
+      "edge_type": "contains",
+      "source_node": "codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "codegraph:method:5088debf287f:calculator_core.SafeEvaluator.generic_visit",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:3860c6af0960ed78",
+      "edge_type": "contains",
+      "source_node": "codegraph:module:894c4c8c5919:styling",
+      "target_node": "codegraph:function:d814d3842102:styling.inject_custom_css",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:ddf952b197261ce4",
+      "edge_type": "imports",
+      "source_node": "codegraph:module:77a4cbc21319:calculator_core",
+      "target_node": "codegraph:import:0bf697f98dad:ast",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:ce21041ce0ce4b60",
+      "edge_type": "imports",
+      "source_node": "codegraph:module:77a4cbc21319:calculator_core",
+      "target_node": "codegraph:import:11eba99f38a3:math",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:c9096258f5dd13ae",
+      "edge_type": "imports",
+      "source_node": "codegraph:module:77a4cbc21319:calculator_core",
+      "target_node": "codegraph:import:2bfa55e4ee19:operator",
+      "score": 1.0,
+      "metadata": {}
+    },
+    {
+      "edge_id": "codegraph:edge:53d5b49d562996d3",
+      "edge_type": "imports",
+      "source_node": "codegraph:module:894c4c8c5919:styling",
+      "target_node": "codegraph:import:571966765eb8:st",
+      "score": 1.0,
+      "metadata": {}
+    }
+  ],
+  "token_usage": {
+    "codegraph_graphify_optimized_context": {
+      "stage": "codegraph_graphify_optimized_context",
+      "tokens": 4445,
+      "count_type": "estimated",
+      "provider": null,
+      "model": null,
+      "notes": "Estimated with cl100k_base via tiktoken; Gemini exact counts are collected at LLM call time when configured."
+    },
+    "llm_prompt_tokens": {
+      "stage": "llm_prompt_tokens",
+      "tokens": 5840,
+      "count_type": "exact",
+      "provider": "gemini",
+      "model": "gemini-2.5-flash",
+      "notes": null
+    },
+    "llm_response_tokens": {
+      "stage": "llm_response_tokens",
+      "tokens": 971,
+      "count_type": "exact",
+      "provider": "gemini",
+      "model": "gemini-2.5-flash",
+      "notes": null
+    },
+    "total_per_query_tokens": {
+      "stage": "total_per_query_tokens",
+      "tokens": 7111,
+      "count_type": "exact",
+      "provider": "gemini",
+      "model": "gemini-2.5-flash",
+      "notes": null
+    }
+  },
+  "latency_ms": 7587,
+  "created_at": "2026-05-26T10:52:10.291620Z"
+}

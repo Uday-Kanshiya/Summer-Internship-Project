@@ -1,0 +1,16 @@
+{
+  "repo_id": "d49b9ed3ec1241e7a84e35de42b5238f",
+  "name": "Calculator",
+  "origin": "https://github.com/Uday-Kanshiya/Calculator.git",
+  "status": "completed",
+  "stats": {
+    "total_files": 7,
+    "python_files": 3,
+    "total_lines": 1001,
+    "python_lines": 724
+  },
+  "warnings": [],
+  "error": null,
+  "created_at": "2026-05-26T15:37:36.500912Z",
+  "updated_at": "2026-05-26T15:37:38.996094Z"
+}

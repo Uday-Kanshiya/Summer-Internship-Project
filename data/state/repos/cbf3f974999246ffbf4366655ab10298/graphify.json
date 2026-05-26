@@ -1,0 +1,2410 @@
+{
+  "repo_id": "cbf3f974999246ffbf4366655ab10298",
+  "source": "graphify-fallback",
+  "nodes": [
+    {
+      "node_id": "graphify-fallback:codegraph:module:73bd92d5c31f:app",
+      "node_type": "module",
+      "label": "app",
+      "file_path": "app.py",
+      "line_start": 1,
+      "line_end": 301,
+      "source_snippet": "import streamlit as st\nimport pandas as pd\nfrom calculator_core import SafeEvaluator\nfrom styling import inject_custom_css\n\n# Page Configuration for modern premium feel\nst.set_page_config(\n    page_title=\"Aether Scientific Calculator\",\n    page_icon=\"\ud83e\uddee\",\n    layout=\"wide\",\n    initial_sidebar_state=\"expanded\"\n)\n\n# Inject our custom glassmorphic dark styling\ninject_custom_css()\n\n# Initialize session state variables\nif 'expression' not in st.session_state:\n    st.session_state.expression = \"\"\nif 'result' not in st.session_state:\n    st.session_state.result = \"\"\nif 'error' not in st.session_state:\n    st.session_state.error = \"\"\nif 'history' not in st.session_state:\n    st.session_state.history = []\nif 'angle_mode' not in st.session_state:\n    st.session_state.angle_mode = \"Radians\"\n\ndef evaluate_now():\n    \"\"\"\n    Evaluates the current formula expression in session state, \n    updating result/error and adding to calculation history.\n    \"\"\"\n    expr = st.session_state.expression.strip()\n    if not expr:\n        st.session_state.result = \"\"\n        st.session_state.error = \"\"\n        return\n        \n    evaluator = SafeEvaluator(angle_mode=st.session_state.angle_mode)\n    try:\n       ",
+      "metadata": {
+        "path": "app.py",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "node_type": "function",
+      "label": "evaluate_now",
+      "file_path": "app.py",
+      "line_start": 29,
+      "line_end": 70,
+      "source_snippet": "def evaluate_now():\n    \"\"\"\n    Evaluates the current formula expression in session state, \n    updating result/error and adding to calculation history.\n    \"\"\"\n    expr = st.session_state.expression.strip()\n    if not expr:\n        st.session_state.result = \"\"\n        st.session_state.error = \"\"\n        return\n        \n    evaluator = SafeEvaluator(angle_mode=st.session_state.angle_mode)\n    try:\n        val = evaluator.evaluate(expr)\n        if val == \"\":\n            st.session_state.result = \"\"\n            st.session_state.error = \"\"\n            return\n            \n        if isinstance(val, float):\n            # Format float output nicely\n            if val.is_integer():\n                formatted = str(int(val))\n            elif abs(val) < 1e-6 or abs(val) > 1e9:\n                formatted = f\"{val:.6e}\"\n            else:\n                formatted = f\"{val:.8g}\"\n        else:\n            formatted = str(val)\n            \n        st.session_state.result = formatted\n        st.session_state.error = \"\"\n        \n        # Add success to history\n        item = {\"formula\": expr, \"result\": formatted}\n        if not st.session_state.history or st.session_state.history[-1] != item:\n            st.session_state.history.append(item)\n            if len(st.session_state.history) > 20:\n                st.session_state.history.pop(0)\n    except Exception as e:\n        st.session_state.error = str(e)\n        st.session_state.result = \"\"",
+      "metadata": {
+        "qualified_name": "app.evaluate_now",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:function:c4ebd6197dbf:app.handle_click",
+      "node_type": "function",
+      "label": "handle_click",
+      "file_path": "app.py",
+      "line_start": 72,
+      "line_end": 106,
+      "source_snippet": "def handle_click(label):\n    \"\"\"\n    Handles standard and complex button clicks on the interactive keypad.\n    \"\"\"\n    if label == \"AC\":\n        st.session_state.expression = \"\"\n        st.session_state.result = \"\"\n        st.session_state.error = \"\"\n    elif label == \"\u232b\":\n        st.session_state.expression = st.session_state.expression[:-1]\n    elif label == \"=\":\n        evaluate_now()\n    elif label == \"+/-\":\n        expr = st.session_state.expression\n        if expr:\n            if expr.startswith(\"-(\") and expr.endswith(\")\"):\n                st.session_state.expression = expr[2:-1]\n            else:\n                st.session_state.expression = f\"-({expr})\"\n    elif label == \"1/x\":\n        expr = st.session_state.expression\n        if expr:\n            st.session_state.expression = f\"1/({expr})\"\n        else:\n            st.session_state.expression = \"1/(\"\n    elif label == \"x\u00b2\":\n        st.session_state.expression += \"^2\"\n    elif label == \"x\u02b8\":\n        st.session_state.expression += \"^\"\n    elif label == \"n!\":\n        st.session_state.expression += \"fact(\"\n    elif label in [\"sin\", \"cos\", \"tan\", \"asin\", \"acos\", \"atan\", \"sinh\", \"cosh\", \"tanh\", \"sqrt\", \"cbrt\", \"exp\", \"log\", \"ln\", \"log2\", \"abs\"]:\n        st.session_state.expression += f\"{label}(\"\n    else:\n        st.session_state.expression += label",
+      "metadata": {
+        "qualified_name": "app.handle_click",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:module:77a4cbc21319:calculator_core",
+      "node_type": "module",
+      "label": "calculator_core",
+      "file_path": "calculator_core.py",
+      "line_start": 1,
+      "line_end": 203,
+      "source_snippet": "import ast\nimport math\nimport operator\n\nclass SafeEvaluator(ast.NodeVisitor):\n    \"\"\"\n    A safe mathematical expression evaluator using Python's AST (Abstract Syntax Tree).\n    This avoids the safety issues of raw eval() while providing robust calculations.\n    \"\"\"\n    def __init__(self, angle_mode=\"Radians\", variables=None):\n        self.angle_mode = angle_mode\n        self.variables = variables or {}\n        \n        # Supported operators mapping\n        self.operators = {\n            ast.Add: operator.add,\n            ast.Sub: operator.sub,\n            ast.Mult: operator.mul,\n            ast.Div: operator.truediv,\n            ast.FloorDiv: operator.floordiv,\n            ast.Mod: operator.mod,\n            ast.Pow: operator.pow,\n            ast.USub: operator.neg,\n            ast.UAdd: lambda x: x,\n        }\n        \n        # Supported constants\n        self.constants = {\n            'pi': math.pi,\n            'PI': math.pi,\n            'e': math.e,\n            'E': math.e,\n        }\n\n    def get_functions(self):\n        \"\"\"\n        Returns functions available in the calculator, taking into account \n        the current angle mode (Degrees vs Radians).\n        \"\"\"\n        is_deg ",
+      "metadata": {
+        "path": "calculator_core.py",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "node_type": "class",
+      "label": "SafeEvaluator",
+      "file_path": "calculator_core.py",
+      "line_start": 5,
+      "line_end": 203,
+      "source_snippet": "class SafeEvaluator(ast.NodeVisitor):\n    \"\"\"\n    A safe mathematical expression evaluator using Python's AST (Abstract Syntax Tree).\n    This avoids the safety issues of raw eval() while providing robust calculations.\n    \"\"\"\n    def __init__(self, angle_mode=\"Radians\", variables=None):\n        self.angle_mode = angle_mode\n        self.variables = variables or {}\n        \n        # Supported operators mapping\n        self.operators = {\n            ast.Add: operator.add,\n            ast.Sub: operator.sub,\n            ast.Mult: operator.mul,\n            ast.Div: operator.truediv,\n            ast.FloorDiv: operator.floordiv,\n            ast.Mod: operator.mod,\n            ast.Pow: operator.pow,\n            ast.USub: operator.neg,\n            ast.UAdd: lambda x: x,\n        }\n        \n        # Supported constants\n        self.constants = {\n            'pi': math.pi,\n            'PI': math.pi,\n            'e': math.e,\n            'E': math.e,\n        }\n\n    def get_functions(self):\n        \"\"\"\n        Returns functions available in the calculator, taking into account \n        the current angle mode (Degrees vs Radians).\n        \"\"\"\n        is_deg = (self.angle_mode.lower() == \"degrees\")\n        \n        def sin_val(x):\n            return math.sin(math.radians(x) if is_deg else x)\n            \n        def cos_val(x):\n            return math.cos(math.radians(x) if is_deg else x)\n            \n        def tan_val(x):\n            # Handle tan(90), tan(270) undefined cases in degrees\n            if is_deg:\n                x_mod = x % 180\n                if abs(x_mod - 90) < 1e-9:\n                    raise ValueError(\"tan(x) is undefined\")\n            return math.tan(math.radians(x) if is_deg else x)\n\n        def asin_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"asin domain is [-1, 1]\")\n            val = math.asin(x)\n            return math.degrees(val) if is_deg else val\n\n        def acos_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"acos domain is [-1, 1]\")\n            val = math.acos(x)\n            return math.degrees(val) if is_deg else val\n\n        def atan_val(x):\n            val = math.atan(x)\n            retur\n...",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator",
+        "ast_type": "ClassDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:method:15e81125afa4:calculator_core.SafeEvaluator.__init__",
+      "node_type": "method",
+      "label": "__init__",
+      "file_path": "calculator_core.py",
+      "line_start": 10,
+      "line_end": 33,
+      "source_snippet": "    def __init__(self, angle_mode=\"Radians\", variables=None):\n        self.angle_mode = angle_mode\n        self.variables = variables or {}\n        \n        # Supported operators mapping\n        self.operators = {\n            ast.Add: operator.add,\n            ast.Sub: operator.sub,\n            ast.Mult: operator.mul,\n            ast.Div: operator.truediv,\n            ast.FloorDiv: operator.floordiv,\n            ast.Mod: operator.mod,\n            ast.Pow: operator.pow,\n            ast.USub: operator.neg,\n            ast.UAdd: lambda x: x,\n        }\n        \n        # Supported constants\n        self.constants = {\n            'pi': math.pi,\n            'PI': math.pi,\n            'e': math.e,\n            'E': math.e,\n        }",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.__init__",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "node_type": "method",
+      "label": "get_functions",
+      "file_path": "calculator_core.py",
+      "line_start": 35,
+      "line_end": 120,
+      "source_snippet": "    def get_functions(self):\n        \"\"\"\n        Returns functions available in the calculator, taking into account \n        the current angle mode (Degrees vs Radians).\n        \"\"\"\n        is_deg = (self.angle_mode.lower() == \"degrees\")\n        \n        def sin_val(x):\n            return math.sin(math.radians(x) if is_deg else x)\n            \n        def cos_val(x):\n            return math.cos(math.radians(x) if is_deg else x)\n            \n        def tan_val(x):\n            # Handle tan(90), tan(270) undefined cases in degrees\n            if is_deg:\n                x_mod = x % 180\n                if abs(x_mod - 90) < 1e-9:\n                    raise ValueError(\"tan(x) is undefined\")\n            return math.tan(math.radians(x) if is_deg else x)\n\n        def asin_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"asin domain is [-1, 1]\")\n            val = math.asin(x)\n            return math.degrees(val) if is_deg else val\n\n        def acos_val(x):\n            if x < -1 or x > 1:\n                raise ValueError(\"acos domain is [-1, 1]\")\n            val = math.acos(x)\n            return math.degrees(val) if is_deg else val\n\n        def atan_val(x):\n            val = math.atan(x)\n            return math.degrees(val) if is_deg else val\n\n        def fact_val(x):\n            if x < 0 or not float(x).is_integer():\n                raise ValueError(\"Factorial is only defined for non-negative integers\")\n            if x > 1000:\n                raise OverflowError(\"Factorial value too large to compute\")\n            return math.factorial(int(x))\n\n        def sqrt_val(x):\n            if x < 0:\n                raise ValueError(\"Square root of negative number is undefined (real domain)\")\n            return math.sqrt(x)\n\n        def cbrt_val(x):\n            return math.copysign(abs(x) ** (1/3), x)\n\n        def log_val(x):\n            if x <= 0:\n                raise ValueError(\"Logarithm domain error (x must be > 0)\")\n            return math.log10(x)\n\n        def ln_val(x):\n            if x <= 0:\n                raise ValueError(\"Logarithm domain error (x must be > 0)\")\n            return math.log(x)\n\n        def log2_val(x):\n            if x <= 0:\n     \n...",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.get_functions",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "node_type": "method",
+      "label": "evaluate",
+      "file_path": "calculator_core.py",
+      "line_start": 122,
+      "line_end": 143,
+      "source_snippet": "    def evaluate(self, expr_str: str):\n        \"\"\"\n        Sanitizes and evaluates the expression string safely.\n        \"\"\"\n        # 1. Clean visual operators to python operators\n        expr_str = expr_str.replace('^', '**')\n        expr_str = expr_str.replace('\u03c0', 'pi')\n        expr_str = expr_str.replace('\u00d7', '*')\n        expr_str = expr_str.replace('\u00f7', '/')\n        \n        if not expr_str.strip():\n            return \"\"\n\n        try:\n            node = ast.parse(expr_str, mode='eval')\n            return self.visit(node.body)\n        except SyntaxError as e:\n            raise ValueError(\"Invalid syntax\") from e\n        except ZeroDivisionError:\n            raise ValueError(\"Division by zero\")\n        except OverflowError:\n            raise ValueError(\"Result too large (overflow)\")",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.evaluate",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:method:9ec01458841b:calculator_core.SafeEvaluator.visit_Num",
+      "node_type": "method",
+      "label": "visit_Num",
+      "file_path": "calculator_core.py",
+      "line_start": 145,
+      "line_end": 146,
+      "source_snippet": "    def visit_Num(self, node):\n        return node.n",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_Num",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:method:8c06a11d4df4:calculator_core.SafeEvaluator.visit_Constant",
+      "node_type": "method",
+      "label": "visit_Constant",
+      "file_path": "calculator_core.py",
+      "line_start": 148,
+      "line_end": 149,
+      "source_snippet": "    def visit_Constant(self, node):\n        return node.value",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_Constant",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:method:861a2578f51a:calculator_core.SafeEvaluator.visit_BinOp",
+      "node_type": "method",
+      "label": "visit_BinOp",
+      "file_path": "calculator_core.py",
+      "line_start": 151,
+      "line_end": 164,
+      "source_snippet": "    def visit_BinOp(self, node):\n        op_type = type(node.op)\n        if op_type not in self.operators:\n            raise TypeError(f\"Unsupported operator: {op_type.__name__}\")\n        \n        left = self.visit(node.left)\n        right = self.visit(node.right)\n        \n        try:\n            return self.operators[op_type](left, right)\n        except ZeroDivisionError:\n            raise ValueError(\"Division by zero\")\n        except OverflowError:\n            raise ValueError(\"Result overflow\")",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_BinOp",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:method:2aa814213bb0:calculator_core.SafeEvaluator.visit_UnaryOp",
+      "node_type": "method",
+      "label": "visit_UnaryOp",
+      "file_path": "calculator_core.py",
+      "line_start": 166,
+      "line_end": 171,
+      "source_snippet": "    def visit_UnaryOp(self, node):\n        op_type = type(node.op)\n        if op_type not in self.operators:\n            raise TypeError(f\"Unsupported operator: {op_type.__name__}\")\n        operand = self.visit(node.operand)\n        return self.operators[op_type](operand)",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_UnaryOp",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:method:e6d1696d1f24:calculator_core.SafeEvaluator.visit_Name",
+      "node_type": "method",
+      "label": "visit_Name",
+      "file_path": "calculator_core.py",
+      "line_start": 173,
+      "line_end": 179,
+      "source_snippet": "    def visit_Name(self, node):\n        name = node.id\n        if name in self.variables:\n            return self.variables[name]\n        if name in self.constants:\n            return self.constants[name]\n        raise NameError(f\"Undefined symbol: '{name}'\")",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_Name",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "node_type": "method",
+      "label": "visit_Call",
+      "file_path": "calculator_core.py",
+      "line_start": 181,
+      "line_end": 200,
+      "source_snippet": "    def visit_Call(self, node):\n        if not isinstance(node.func, ast.Name):\n            raise TypeError(\"Unsupported function syntax\")\n        \n        func_name = node.func.id\n        funcs = self.get_functions()\n        \n        if func_name not in funcs:\n            raise NameError(f\"Unsupported function: '{func_name}'\")\n        \n        if len(node.args) != 1:\n            raise TypeError(f\"Function '{func_name}' expects exactly 1 argument\")\n        \n        arg_val = self.visit(node.args[0])\n        try:\n            return funcs[func_name](arg_val)\n        except ValueError as ve:\n            raise ValueError(f\"Math domain error in {func_name}: {str(ve)}\")\n        except OverflowError:\n            raise ValueError(f\"Overflow error in {func_name}\")",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.visit_Call",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:method:5088debf287f:calculator_core.SafeEvaluator.generic_visit",
+      "node_type": "method",
+      "label": "generic_visit",
+      "file_path": "calculator_core.py",
+      "line_start": 202,
+      "line_end": 203,
+      "source_snippet": "    def generic_visit(self, node):\n        raise TypeError(f\"Unsupported operation: {type(node).__name__}\")",
+      "metadata": {
+        "qualified_name": "calculator_core.SafeEvaluator.generic_visit",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:module:894c4c8c5919:styling",
+      "node_type": "module",
+      "label": "styling",
+      "file_path": "styling.py",
+      "line_start": 1,
+      "line_end": 220,
+      "source_snippet": "import streamlit as st\n\ndef inject_custom_css():\n    \"\"\"\n    Injects a high-fidelity, premium CSS theme into the Streamlit application.\n    This replaces standard Streamlit styles with a gorgeous glassmorphic dark UI.\n    \"\"\"\n    css_content = \"\"\"\n    <style>\n    /* Import modern Google Fonts */\n    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');\n\n    /* Background and Layout Overrides */\n    .stApp {\n        background: radial-gradient(circle at 50% 50%, #171a25 0%, #08090d 100%) !important;\n        font-family: 'Outfit', sans-serif !important;\n        color: #f1f5f9 !important;\n    }\n    \n    /* Remove default Streamlit header and footer */\n    header {visibility: hidden;}\n    footer {visibility: hidden;}\n    #MainMenu {visibility: hidden;}\n    \n    /* Main container card */\n    .calc-card {\n        background: rgba(22, 28, 41, 0.45);\n        backdrop-filter: blur(20px);\n        -webkit-backdrop-filter: blur(20px);\n        border: 1px solid rgba(255, 255, 255, 0.05);\n        border-radius: 28px;\n        padding: 30px;\n        box-shadow: 0 25px 50px -12px rgba(0, ",
+      "metadata": {
+        "path": "styling.py",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:function:d814d3842102:styling.inject_custom_css",
+      "node_type": "function",
+      "label": "inject_custom_css",
+      "file_path": "styling.py",
+      "line_start": 3,
+      "line_end": 220,
+      "source_snippet": "def inject_custom_css():\n    \"\"\"\n    Injects a high-fidelity, premium CSS theme into the Streamlit application.\n    This replaces standard Streamlit styles with a gorgeous glassmorphic dark UI.\n    \"\"\"\n    css_content = \"\"\"\n    <style>\n    /* Import modern Google Fonts */\n    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');\n\n    /* Background and Layout Overrides */\n    .stApp {\n        background: radial-gradient(circle at 50% 50%, #171a25 0%, #08090d 100%) !important;\n        font-family: 'Outfit', sans-serif !important;\n        color: #f1f5f9 !important;\n    }\n    \n    /* Remove default Streamlit header and footer */\n    header {visibility: hidden;}\n    footer {visibility: hidden;}\n    #MainMenu {visibility: hidden;}\n    \n    /* Main container card */\n    .calc-card {\n        background: rgba(22, 28, 41, 0.45);\n        backdrop-filter: blur(20px);\n        -webkit-backdrop-filter: blur(20px);\n        border: 1px solid rgba(255, 255, 255, 0.05);\n        border-radius: 28px;\n        padding: 30px;\n        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),\n                    0 0 40px rgba(0, 242, 254, 0.03);\n        margin: 20px auto;\n        max-width: 580px;\n    }\n\n    /* Screen display */\n    .led-screen {\n        background: #06070a;\n        border: 1px solid rgba(255, 255, 255, 0.03);\n        border-radius: 20px;\n        padding: 22px 26px;\n        box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.8),\n                    0 0 1px rgba(255, 255, 255, 0.1);\n        margin-bottom: 25px;\n        text-align: right;\n        min-height: 120px;\n        display: flex;\n        flex-direction: column;\n        justify-content: space-between;\n        overflow: hidden;\n    }\n    \n    .screen-formula {\n        font-family: 'JetBrains Mono', monospace;\n        font-size: 1.1rem;\n        color: #64748b;\n        overflow-x: auto;\n        white-space: nowrap;\n        min-height: 28px;\n        letter-spacing: 0.5px;\n    }\n    \n    .screen-result {\n        font-family: 'Orbitron', sans-serif;\n        font-size: 2.5rem;\n        font-weight: 700;\n        color: #00f2fe;\n \n...",
+      "metadata": {
+        "qualified_name": "styling.inject_custom_css",
+        "ast_type": "FunctionDef",
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:import:571966765eb8:st",
+      "node_type": "import",
+      "label": "st",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "module": "streamlit",
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:import:be054f83250f:pd",
+      "node_type": "import",
+      "label": "pd",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "module": "pandas",
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:import:4920b2860ecb:SafeEvaluator",
+      "node_type": "import",
+      "label": "SafeEvaluator",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "module": "calculator_core.SafeEvaluator",
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:import:19e2bbef302d:inject_custom_css",
+      "node_type": "import",
+      "label": "inject_custom_css",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "module": "styling.inject_custom_css",
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:import:0bf697f98dad:ast",
+      "node_type": "import",
+      "label": "ast",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "module": "ast",
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:import:11eba99f38a3:math",
+      "node_type": "import",
+      "label": "math",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "module": "math",
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:import:2bfa55e4ee19:operator",
+      "node_type": "import",
+      "label": "operator",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "module": "operator",
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:eb2419901ce4:st.session_state.expression.strip",
+      "node_type": "external_symbol",
+      "label": "st.session_state.expression.strip",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:61347c07caa5:isinstance",
+      "node_type": "external_symbol",
+      "label": "isinstance",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:9089008e8279:val.is_integer",
+      "node_type": "external_symbol",
+      "label": "val.is_integer",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:7487e88f1383:str",
+      "node_type": "external_symbol",
+      "label": "str",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:eeb442c387bd:st.session_state.history.append",
+      "node_type": "external_symbol",
+      "label": "st.session_state.history.append",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:a981ca24418d:str",
+      "node_type": "external_symbol",
+      "label": "str",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:f02e8d5cd8fe:str",
+      "node_type": "external_symbol",
+      "label": "str",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:af6d0f0499a7:len",
+      "node_type": "external_symbol",
+      "label": "len",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:d47bbea54d92:st.session_state.history.pop",
+      "node_type": "external_symbol",
+      "label": "st.session_state.history.pop",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:374f2d8ca10f:int",
+      "node_type": "external_symbol",
+      "label": "int",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:bb2d4d174d2a:abs",
+      "node_type": "external_symbol",
+      "label": "abs",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:7589ea7f5b31:expr.startswith",
+      "node_type": "external_symbol",
+      "label": "expr.startswith",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:8187c78c8d3e:expr.endswith",
+      "node_type": "external_symbol",
+      "label": "expr.endswith",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:dffc5c4f6bb7:self.angle_mode.lower",
+      "node_type": "external_symbol",
+      "label": "self.angle_mode.lower",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:8754af50beb8:math.sin",
+      "node_type": "external_symbol",
+      "label": "math.sin",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:58aa4b955b35:math.cos",
+      "node_type": "external_symbol",
+      "label": "math.cos",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:69625aac7bdd:math.tan",
+      "node_type": "external_symbol",
+      "label": "math.tan",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:5e752ed406b2:math.asin",
+      "node_type": "external_symbol",
+      "label": "math.asin",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:199f1e1c403e:math.acos",
+      "node_type": "external_symbol",
+      "label": "math.acos",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:8677b75345cf:math.atan",
+      "node_type": "external_symbol",
+      "label": "math.atan",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:69b962baed98:math.factorial",
+      "node_type": "external_symbol",
+      "label": "math.factorial",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:2aa60a0af138:math.sqrt",
+      "node_type": "external_symbol",
+      "label": "math.sqrt",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:d4e8e39871d4:math.copysign",
+      "node_type": "external_symbol",
+      "label": "math.copysign",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:3ae55d3f39a3:math.log10",
+      "node_type": "external_symbol",
+      "label": "math.log10",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:bab25fd28d21:math.log",
+      "node_type": "external_symbol",
+      "label": "math.log",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:29987fc4043d:math.log2",
+      "node_type": "external_symbol",
+      "label": "math.log2",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:d3ee32ca8d21:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:e481a6db3da7:math.degrees",
+      "node_type": "external_symbol",
+      "label": "math.degrees",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:41f12bd555ee:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:88203f19165b:math.degrees",
+      "node_type": "external_symbol",
+      "label": "math.degrees",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:2d071714905a:math.degrees",
+      "node_type": "external_symbol",
+      "label": "math.degrees",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:773418a68a7e:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:631edee059e0:OverflowError",
+      "node_type": "external_symbol",
+      "label": "OverflowError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:8811a72184c6:int",
+      "node_type": "external_symbol",
+      "label": "int",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:644c8d542ece:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:893fe437265d:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:00211902a111:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:f85bf2e0e2c9:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:5254d6917a89:math.radians",
+      "node_type": "external_symbol",
+      "label": "math.radians",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:c066a81c41d5:math.radians",
+      "node_type": "external_symbol",
+      "label": "math.radians",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:5ee46ede74a3:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:815b08126d29:math.radians",
+      "node_type": "external_symbol",
+      "label": "math.radians",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:b9415d15343d:float.is_integer",
+      "node_type": "external_symbol",
+      "label": "float.is_integer",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:6a542cc4dc99:abs",
+      "node_type": "external_symbol",
+      "label": "abs",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:c80a381d313a:float",
+      "node_type": "external_symbol",
+      "label": "float",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:79d54e5de2b9:expr_str.replace",
+      "node_type": "external_symbol",
+      "label": "expr_str.replace",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:3ee50279419a:expr_str.replace",
+      "node_type": "external_symbol",
+      "label": "expr_str.replace",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:d27d9cddf673:expr_str.replace",
+      "node_type": "external_symbol",
+      "label": "expr_str.replace",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:9489ad66d135:expr_str.replace",
+      "node_type": "external_symbol",
+      "label": "expr_str.replace",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:31f38adc1946:expr_str.strip",
+      "node_type": "external_symbol",
+      "label": "expr_str.strip",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:9df2376cdc3d:ast.parse",
+      "node_type": "external_symbol",
+      "label": "ast.parse",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:73d55b221998:self.visit",
+      "node_type": "external_symbol",
+      "label": "self.visit",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:645e9b61d64d:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:1f941bd4c836:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:074250803172:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:cb37c70028f2:type",
+      "node_type": "external_symbol",
+      "label": "type",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:778768dacbb3:self.visit",
+      "node_type": "external_symbol",
+      "label": "self.visit",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:f0e9d076be84:self.visit",
+      "node_type": "external_symbol",
+      "label": "self.visit",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:ef24ad742b53:TypeError",
+      "node_type": "external_symbol",
+      "label": "TypeError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:d3f43528e4d6:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:0d2167feb0cf:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:50de8e1a9bb7:type",
+      "node_type": "external_symbol",
+      "label": "type",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:8e590a961ce0:self.visit",
+      "node_type": "external_symbol",
+      "label": "self.visit",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:ff03a96dcac3:TypeError",
+      "node_type": "external_symbol",
+      "label": "TypeError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:f7b8e886ee09:NameError",
+      "node_type": "external_symbol",
+      "label": "NameError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:7fe86b740aec:self.visit",
+      "node_type": "external_symbol",
+      "label": "self.visit",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:f560c0213664:isinstance",
+      "node_type": "external_symbol",
+      "label": "isinstance",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:7211045b7502:TypeError",
+      "node_type": "external_symbol",
+      "label": "TypeError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:4b0f42816a29:NameError",
+      "node_type": "external_symbol",
+      "label": "NameError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:45b86e73e700:len",
+      "node_type": "external_symbol",
+      "label": "len",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:2a9048227a41:TypeError",
+      "node_type": "external_symbol",
+      "label": "TypeError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:16ce381e304b:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:fb916c77ccdc:ValueError",
+      "node_type": "external_symbol",
+      "label": "ValueError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:09da8708d817:str",
+      "node_type": "external_symbol",
+      "label": "str",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:6b2f57f6576f:TypeError",
+      "node_type": "external_symbol",
+      "label": "TypeError",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:f21ca8f349e5:type",
+      "node_type": "external_symbol",
+      "label": "type",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:84604138eb96:st.markdown",
+      "node_type": "external_symbol",
+      "label": "st.markdown",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "node_id": "graphify-fallback:codegraph:external_symbol:ea2237eba3e7:ast.NodeVisitor",
+      "node_type": "external_symbol",
+      "label": "ast.NodeVisitor",
+      "file_path": null,
+      "line_start": null,
+      "line_end": null,
+      "source_snippet": null,
+      "metadata": {
+        "external": true,
+        "fallback_from": "codegraph"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:7d62dc26a6968203",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:module:73bd92d5c31f:app",
+      "target_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:c76183b219fda182",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:module:73bd92d5c31f:app",
+      "target_node": "graphify-fallback:codegraph:function:c4ebd6197dbf:app.handle_click",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:e505a62f5327710c",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:module:77a4cbc21319:calculator_core",
+      "target_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:ab6573aeef00d706",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "graphify-fallback:codegraph:method:15e81125afa4:calculator_core.SafeEvaluator.__init__",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:97746a40a246884a",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:bcaf867a4c7c5132",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:f9ab871a93d10a60",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "graphify-fallback:codegraph:method:9ec01458841b:calculator_core.SafeEvaluator.visit_Num",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:8872cd6e6a93cab8",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "graphify-fallback:codegraph:method:8c06a11d4df4:calculator_core.SafeEvaluator.visit_Constant",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:7885d4176301ccbd",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "graphify-fallback:codegraph:method:861a2578f51a:calculator_core.SafeEvaluator.visit_BinOp",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:13553225f4d44c39",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "graphify-fallback:codegraph:method:2aa814213bb0:calculator_core.SafeEvaluator.visit_UnaryOp",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:2b4bc7188cee5b58",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "graphify-fallback:codegraph:method:e6d1696d1f24:calculator_core.SafeEvaluator.visit_Name",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:ddcd55edad619bee",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:1bb9f4c112d3c4ce",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "graphify-fallback:codegraph:method:5088debf287f:calculator_core.SafeEvaluator.generic_visit",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:3860c6af0960ed78",
+      "edge_type": "contains",
+      "source_node": "graphify-fallback:codegraph:module:894c4c8c5919:styling",
+      "target_node": "graphify-fallback:codegraph:function:d814d3842102:styling.inject_custom_css",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:0765a947f584427b",
+      "edge_type": "imports",
+      "source_node": "graphify-fallback:codegraph:module:73bd92d5c31f:app",
+      "target_node": "graphify-fallback:codegraph:import:571966765eb8:st",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:ace18262695258e3",
+      "edge_type": "imports",
+      "source_node": "graphify-fallback:codegraph:module:73bd92d5c31f:app",
+      "target_node": "graphify-fallback:codegraph:import:be054f83250f:pd",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:e93fddbb6ada4f84",
+      "edge_type": "imports",
+      "source_node": "graphify-fallback:codegraph:module:73bd92d5c31f:app",
+      "target_node": "graphify-fallback:codegraph:import:4920b2860ecb:SafeEvaluator",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:34ca971dabdd3131",
+      "edge_type": "imports",
+      "source_node": "graphify-fallback:codegraph:module:73bd92d5c31f:app",
+      "target_node": "graphify-fallback:codegraph:import:19e2bbef302d:inject_custom_css",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:ddf952b197261ce4",
+      "edge_type": "imports",
+      "source_node": "graphify-fallback:codegraph:module:77a4cbc21319:calculator_core",
+      "target_node": "graphify-fallback:codegraph:import:0bf697f98dad:ast",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:ce21041ce0ce4b60",
+      "edge_type": "imports",
+      "source_node": "graphify-fallback:codegraph:module:77a4cbc21319:calculator_core",
+      "target_node": "graphify-fallback:codegraph:import:11eba99f38a3:math",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:c9096258f5dd13ae",
+      "edge_type": "imports",
+      "source_node": "graphify-fallback:codegraph:module:77a4cbc21319:calculator_core",
+      "target_node": "graphify-fallback:codegraph:import:2bfa55e4ee19:operator",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:53d5b49d562996d3",
+      "edge_type": "imports",
+      "source_node": "graphify-fallback:codegraph:module:894c4c8c5919:styling",
+      "target_node": "graphify-fallback:codegraph:import:571966765eb8:st",
+      "score": 1.0,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:7417f45a81d144d4",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:external_symbol:eb2419901ce4:st.session_state.expression.strip",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:9fa9d6087c8664cf",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:271bcab87a237ee8",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:73afe4d35c8753a8",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:external_symbol:61347c07caa5:isinstance",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:b16756d289431586",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:external_symbol:9089008e8279:val.is_integer",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:8e6bc5ce145a1d79",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:external_symbol:7487e88f1383:str",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:1c1fcbe19368ad93",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:external_symbol:eeb442c387bd:st.session_state.history.append",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:4882cd54a751e69d",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:external_symbol:a981ca24418d:str",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:d172e49b8877a06c",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:external_symbol:f02e8d5cd8fe:str",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:704a6c50878ea723",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:external_symbol:af6d0f0499a7:len",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:e6620d91625c800e",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:external_symbol:d47bbea54d92:st.session_state.history.pop",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:f7ad9b102daca5fb",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:external_symbol:374f2d8ca10f:int",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:3ca2148d6820e445",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "target_node": "graphify-fallback:codegraph:external_symbol:bb2d4d174d2a:abs",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:c3743990b7e5bad1",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:c4ebd6197dbf:app.handle_click",
+      "target_node": "graphify-fallback:codegraph:function:21d0f12197bd:app.evaluate_now",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:782216b688f9d878",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:c4ebd6197dbf:app.handle_click",
+      "target_node": "graphify-fallback:codegraph:external_symbol:7589ea7f5b31:expr.startswith",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:94a1ab7f8d1b9ea0",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:c4ebd6197dbf:app.handle_click",
+      "target_node": "graphify-fallback:codegraph:external_symbol:8187c78c8d3e:expr.endswith",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:c08607fc95b57dff",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:dffc5c4f6bb7:self.angle_mode.lower",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:83916b5cd67f5f57",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:8754af50beb8:math.sin",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:983e1dbee70d46d2",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:58aa4b955b35:math.cos",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:67e5e34cf51af5c8",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:69625aac7bdd:math.tan",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:f6a7030bbd164d71",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:5e752ed406b2:math.asin",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:7af41910c6542c7c",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:199f1e1c403e:math.acos",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:84dd215916c9b2c2",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:8677b75345cf:math.atan",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:3adee99f2ea99975",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:69b962baed98:math.factorial",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:f0de87b45c611159",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:2aa60a0af138:math.sqrt",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:f91813909083d8b7",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:d4e8e39871d4:math.copysign",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:a2ef1f2fb8d8d89d",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:3ae55d3f39a3:math.log10",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:dac3233e169b96fb",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:bab25fd28d21:math.log",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:0271d4a936ff0ed6",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:29987fc4043d:math.log2",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:0e68fbae814f4166",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:d3ee32ca8d21:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:62813626a584b274",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:e481a6db3da7:math.degrees",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:73c838fd1f67fe61",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:41f12bd555ee:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:c06d43377c894a21",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:88203f19165b:math.degrees",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:1c3a3bd2930984be",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:2d071714905a:math.degrees",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:58c3c57da65653c7",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:773418a68a7e:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:d8e8af8bcb27ea1b",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:631edee059e0:OverflowError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:ef84c3799a8c967e",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:8811a72184c6:int",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:0f921598f4cb4185",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:644c8d542ece:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:3ae3ae529562dfa0",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:893fe437265d:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:93a5ef14856b5321",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:00211902a111:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:4ee64d7f3fe4f4c2",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:f85bf2e0e2c9:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:f921ef2a4d69cfa7",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:5254d6917a89:math.radians",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:f86068957aaa3ed1",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:c066a81c41d5:math.radians",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:df7977e4dfb0da33",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:bb2d4d174d2a:abs",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:e5c5b744ef44507f",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:5ee46ede74a3:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:e985013b3c199be5",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:815b08126d29:math.radians",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:50779e29854efe18",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:b9415d15343d:float.is_integer",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:5cedb0bd24dbcc4a",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:6a542cc4dc99:abs",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:a504d788d4dbdefb",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "target_node": "graphify-fallback:codegraph:external_symbol:c80a381d313a:float",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:befed07fa0907934",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "target_node": "graphify-fallback:codegraph:external_symbol:79d54e5de2b9:expr_str.replace",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:a8606b0e8a6f9ebe",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "target_node": "graphify-fallback:codegraph:external_symbol:3ee50279419a:expr_str.replace",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:2494d403b38b4109",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "target_node": "graphify-fallback:codegraph:external_symbol:d27d9cddf673:expr_str.replace",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:d627e5d488eef0cc",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "target_node": "graphify-fallback:codegraph:external_symbol:9489ad66d135:expr_str.replace",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:02d59ccb67b66605",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "target_node": "graphify-fallback:codegraph:external_symbol:31f38adc1946:expr_str.strip",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:d867ac6eb1a4f461",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "target_node": "graphify-fallback:codegraph:external_symbol:9df2376cdc3d:ast.parse",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:43658f11051d6c59",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "target_node": "graphify-fallback:codegraph:external_symbol:73d55b221998:self.visit",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:eb2e30b4e74dd757",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "target_node": "graphify-fallback:codegraph:external_symbol:645e9b61d64d:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:9cd1c2562522d522",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "target_node": "graphify-fallback:codegraph:external_symbol:1f941bd4c836:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:221403cf5f13e69a",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:ff9a2f088207:calculator_core.SafeEvaluator.evaluate",
+      "target_node": "graphify-fallback:codegraph:external_symbol:074250803172:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:62283719eb0301d7",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:861a2578f51a:calculator_core.SafeEvaluator.visit_BinOp",
+      "target_node": "graphify-fallback:codegraph:external_symbol:cb37c70028f2:type",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:1cdab3e584667dd3",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:861a2578f51a:calculator_core.SafeEvaluator.visit_BinOp",
+      "target_node": "graphify-fallback:codegraph:external_symbol:778768dacbb3:self.visit",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:f6e489000baeed19",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:861a2578f51a:calculator_core.SafeEvaluator.visit_BinOp",
+      "target_node": "graphify-fallback:codegraph:external_symbol:f0e9d076be84:self.visit",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:1fd32fc77ff55074",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:861a2578f51a:calculator_core.SafeEvaluator.visit_BinOp",
+      "target_node": "graphify-fallback:codegraph:external_symbol:ef24ad742b53:TypeError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:7f80e51b0ec278f5",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:861a2578f51a:calculator_core.SafeEvaluator.visit_BinOp",
+      "target_node": "graphify-fallback:codegraph:external_symbol:d3f43528e4d6:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:f0503fb8da102261",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:861a2578f51a:calculator_core.SafeEvaluator.visit_BinOp",
+      "target_node": "graphify-fallback:codegraph:external_symbol:0d2167feb0cf:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:212a9cdbd1db9ee9",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:2aa814213bb0:calculator_core.SafeEvaluator.visit_UnaryOp",
+      "target_node": "graphify-fallback:codegraph:external_symbol:50de8e1a9bb7:type",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:516f37fd45e35b0b",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:2aa814213bb0:calculator_core.SafeEvaluator.visit_UnaryOp",
+      "target_node": "graphify-fallback:codegraph:external_symbol:8e590a961ce0:self.visit",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:252af5511763bc32",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:2aa814213bb0:calculator_core.SafeEvaluator.visit_UnaryOp",
+      "target_node": "graphify-fallback:codegraph:external_symbol:ff03a96dcac3:TypeError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:4d829653f562c204",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:e6d1696d1f24:calculator_core.SafeEvaluator.visit_Name",
+      "target_node": "graphify-fallback:codegraph:external_symbol:f7b8e886ee09:NameError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:ac8bbc11d1cf2609",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "target_node": "graphify-fallback:codegraph:method:ca123d070377:calculator_core.SafeEvaluator.get_functions",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:277a4b71060ae8a7",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "target_node": "graphify-fallback:codegraph:external_symbol:7fe86b740aec:self.visit",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:4b34ea79d1df9364",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "target_node": "graphify-fallback:codegraph:external_symbol:f560c0213664:isinstance",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:ac561cf5b1411e8a",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "target_node": "graphify-fallback:codegraph:external_symbol:7211045b7502:TypeError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:1c2cb35c8c16be38",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "target_node": "graphify-fallback:codegraph:external_symbol:4b0f42816a29:NameError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:abcc7e05c237c9d9",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "target_node": "graphify-fallback:codegraph:external_symbol:45b86e73e700:len",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:f0fd7384bc2abf75",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "target_node": "graphify-fallback:codegraph:external_symbol:2a9048227a41:TypeError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:9479d4ba65754664",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "target_node": "graphify-fallback:codegraph:external_symbol:16ce381e304b:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:ab8fcce92ebbcbee",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "target_node": "graphify-fallback:codegraph:external_symbol:fb916c77ccdc:ValueError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:8c59b7c73933c2b4",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:c49b900ec4ee:calculator_core.SafeEvaluator.visit_Call",
+      "target_node": "graphify-fallback:codegraph:external_symbol:09da8708d817:str",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:54f7eead5d6ed5d0",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:5088debf287f:calculator_core.SafeEvaluator.generic_visit",
+      "target_node": "graphify-fallback:codegraph:external_symbol:6b2f57f6576f:TypeError",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:046b5c9c740e6262",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:method:5088debf287f:calculator_core.SafeEvaluator.generic_visit",
+      "target_node": "graphify-fallback:codegraph:external_symbol:f21ca8f349e5:type",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:4ff9163ac6162a11",
+      "edge_type": "calls",
+      "source_node": "graphify-fallback:codegraph:function:d814d3842102:styling.inject_custom_css",
+      "target_node": "graphify-fallback:codegraph:external_symbol:84604138eb96:st.markdown",
+      "score": 0.7,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    },
+    {
+      "edge_id": "graphify-fallback:codegraph:edge:252046143c79fa46",
+      "edge_type": "inherits",
+      "source_node": "graphify-fallback:codegraph:class:ede0967eefdf:calculator_core.SafeEvaluator",
+      "target_node": "graphify-fallback:codegraph:external_symbol:ea2237eba3e7:ast.NodeVisitor",
+      "score": 0.8,
+      "metadata": {
+        "fallback_from": "codegraph"
+      }
+    }
+  ],
+  "raw_output_path": "C:\\Users\\BIBEK\\OneDrive\\Desktop\\context_optimization_project\\data\\state\\repos\\cbf3f974999246ffbf4366655ab10298\\graphify_raw\\raw-output.json",
+  "warnings": [
+    "Graphify CLI not found. Install optional package graphifyy to enable native Graphify output."
+  ],
+  "generated_at": "2026-05-26T10:16:54.316034Z"
+}

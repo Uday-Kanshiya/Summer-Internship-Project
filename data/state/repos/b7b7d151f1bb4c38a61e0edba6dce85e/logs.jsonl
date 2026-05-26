@@ -1,0 +1,8 @@
+{"timestamp": "2026-05-26T10:42:19.683695+00:00", "stage": "pipeline", "level": "info", "message": "Analysis started.", "metadata": {}}
+{"timestamp": "2026-05-26T10:42:19.775588+00:00", "stage": "ingestion", "level": "info", "message": "Discovered 3 Python files.", "metadata": {}}
+{"timestamp": "2026-05-26T10:42:20.002209+00:00", "stage": "tree-sitter", "level": "info", "message": "Parsed 3 files.", "metadata": {}}
+{"timestamp": "2026-05-26T10:42:20.029632+00:00", "stage": "codegraph", "level": "info", "message": "Generated 102 nodes and 105 edges.", "metadata": {}}
+{"timestamp": "2026-05-26T10:42:20.897487+00:00", "stage": "graphify", "level": "info", "message": "Stored graphify graph with 36 nodes and 47 edges.", "metadata": {}}
+{"timestamp": "2026-05-26T10:42:21.910717+00:00", "stage": "tokens", "level": "info", "message": "Token summary generated.", "metadata": {}}
+{"timestamp": "2026-05-26T10:42:21.920290+00:00", "stage": "pipeline", "level": "info", "message": "Analysis finished with status RepoStatus.completed.", "metadata": {}}
+{"timestamp": "2026-05-26T10:43:25.076790+00:00", "stage": "chat-standard", "level": "info", "message": "Query b14987b4868e4af9a07a672292565b7f finished with status failed.", "metadata": {}}

@@ -1,0 +1,5 @@
+{
+  "available": false,
+  "cli": "graphify",
+  "message": "Graphify CLI not found; using documented structural fallback."
+}

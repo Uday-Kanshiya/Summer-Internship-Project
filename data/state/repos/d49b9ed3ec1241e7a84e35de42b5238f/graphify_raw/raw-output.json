@@ -1,0 +1,7 @@
+{
+  "available": true,
+  "cli": "C:\\Users\\BIBEK\\OneDrive\\Desktop\\context_optimization_project\\.venv\\Scripts\\graphify.EXE",
+  "returncode": 0,
+  "stdout": "Re-extracting code files in C:\\Users\\BIBEK\\OneDrive\\Desktop\\context_optimization_project\\data\\repos\\d49b9ed3ec1241e7a84e35de42b5238f\\source (no LLM needed)...\n[graphify watch] Rebuilt (no clustering): 36 nodes, 47 edges\n[graphify watch] graph.json updated in C:\\Users\\BIBEK\\OneDrive\\Desktop\\context_optimization_project\\data\\repos\\d49b9ed3ec1241e7a84e35de42b5238f\\source\\graphify-out\nCode graph updated. For doc/paper/image changes run /graphify --update in your AI assistant.\n",
+  "stderr": ""
+}

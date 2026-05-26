@@ -1,0 +1,730 @@
+{
+  "repo_id": "d49b9ed3ec1241e7a84e35de42b5238f",
+  "file_path": "styling.py",
+  "language": "python",
+  "root": {
+    "type": "module",
+    "named": true,
+    "start_point": [
+      0,
+      0
+    ],
+    "end_point": [
+      220,
+      0
+    ],
+    "start_byte": 0,
+    "end_byte": 6956,
+    "text_preview": null,
+    "children": [
+      {
+        "type": "import_statement",
+        "named": true,
+        "start_point": [
+          0,
+          0
+        ],
+        "end_point": [
+          0,
+          22
+        ],
+        "start_byte": 0,
+        "end_byte": 22,
+        "text_preview": null,
+        "children": [
+          {
+            "type": "import",
+            "named": false,
+            "start_point": [
+              0,
+              0
+            ],
+            "end_point": [
+              0,
+              6
+            ],
+            "start_byte": 0,
+            "end_byte": 6,
+            "text_preview": "import",
+            "children": []
+          },
+          {
+            "type": "aliased_import",
+            "named": true,
+            "start_point": [
+              0,
+              7
+            ],
+            "end_point": [
+              0,
+              22
+            ],
+            "start_byte": 7,
+            "end_byte": 22,
+            "text_preview": null,
+            "children": [
+              {
+                "type": "dotted_name",
+                "named": true,
+                "start_point": [
+                  0,
+                  7
+                ],
+                "end_point": [
+                  0,
+                  16
+                ],
+                "start_byte": 7,
+                "end_byte": 16,
+                "text_preview": null,
+                "children": [
+                  {
+                    "type": "identifier",
+                    "named": true,
+                    "start_point": [
+                      0,
+                      7
+                    ],
+                    "end_point": [
+                      0,
+                      16
+                    ],
+                    "start_byte": 7,
+                    "end_byte": 16,
+                    "text_preview": "streamlit",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "type": "as",
+                "named": false,
+                "start_point": [
+                  0,
+                  17
+                ],
+                "end_point": [
+                  0,
+                  19
+                ],
+                "start_byte": 17,
+                "end_byte": 19,
+                "text_preview": "as",
+                "children": []
+              },
+              {
+                "type": "identifier",
+                "named": true,
+                "start_point": [
+                  0,
+                  20
+                ],
+                "end_point": [
+                  0,
+                  22
+                ],
+                "start_byte": 20,
+                "end_byte": 22,
+                "text_preview": "st",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "function_definition",
+        "named": true,
+        "start_point": [
+          2,
+          0
+        ],
+        "end_point": [
+          219,
+          52
+        ],
+        "start_byte": 24,
+        "end_byte": 6955,
+        "text_preview": null,
+        "children": [
+          {
+            "type": "def",
+            "named": false,
+            "start_point": [
+              2,
+              0
+            ],
+            "end_point": [
+              2,
+              3
+            ],
+            "start_byte": 24,
+            "end_byte": 27,
+            "text_preview": "def",
+            "children": []
+          },
+          {
+            "type": "identifier",
+            "named": true,
+            "start_point": [
+              2,
+              4
+            ],
+            "end_point": [
+              2,
+              21
+            ],
+            "start_byte": 28,
+            "end_byte": 45,
+            "text_preview": "inject_custom_css",
+            "children": []
+          },
+          {
+            "type": "parameters",
+            "named": true,
+            "start_point": [
+              2,
+              21
+            ],
+            "end_point": [
+              2,
+              23
+            ],
+            "start_byte": 45,
+            "end_byte": 47,
+            "text_preview": null,
+            "children": [
+              {
+                "type": "(",
+                "named": false,
+                "start_point": [
+                  2,
+                  21
+                ],
+                "end_point": [
+                  2,
+                  22
+                ],
+                "start_byte": 45,
+                "end_byte": 46,
+                "text_preview": "(",
+                "children": []
+              },
+              {
+                "type": ")",
+                "named": false,
+                "start_point": [
+                  2,
+                  22
+                ],
+                "end_point": [
+                  2,
+                  23
+                ],
+                "start_byte": 46,
+                "end_byte": 47,
+                "text_preview": ")",
+                "children": []
+              }
+            ]
+          },
+          {
+            "type": ":",
+            "named": false,
+            "start_point": [
+              2,
+              23
+            ],
+            "end_point": [
+              2,
+              24
+            ],
+            "start_byte": 47,
+            "end_byte": 48,
+            "text_preview": ":",
+            "children": []
+          },
+          {
+            "type": "block",
+            "named": true,
+            "start_point": [
+              3,
+              4
+            ],
+            "end_point": [
+              219,
+              52
+            ],
+            "start_byte": 53,
+            "end_byte": 6955,
+            "text_preview": null,
+            "children": [
+              {
+                "type": "expression_statement",
+                "named": true,
+                "start_point": [
+                  3,
+                  4
+                ],
+                "end_point": [
+                  6,
+                  7
+                ],
+                "start_byte": 53,
+                "end_byte": 225,
+                "text_preview": null,
+                "children": [
+                  {
+                    "type": "string",
+                    "named": true,
+                    "start_point": [
+                      3,
+                      4
+                    ],
+                    "end_point": [
+                      6,
+                      7
+                    ],
+                    "start_byte": 53,
+                    "end_byte": 225,
+                    "text_preview": null,
+                    "children": [
+                      {
+                        "type": "string_start",
+                        "named": true,
+                        "start_point": [
+                          3,
+                          4
+                        ],
+                        "end_point": [
+                          3,
+                          7
+                        ],
+                        "start_byte": 53,
+                        "end_byte": 56,
+                        "text_preview": "\"\"\"",
+                        "children": []
+                      },
+                      {
+                        "type": "string_content",
+                        "named": true,
+                        "start_point": [
+                          3,
+                          7
+                        ],
+                        "end_point": [
+                          6,
+                          4
+                        ],
+                        "start_byte": 56,
+                        "end_byte": 222,
+                        "text_preview": "\\n    Injects a high-fidelity, premium CSS theme into the Streamlit application.\\n    This replaces standard Streamlit s",
+                        "children": []
+                      },
+                      {
+                        "type": "string_end",
+                        "named": true,
+                        "start_point": [
+                          6,
+                          4
+                        ],
+                        "end_point": [
+                          6,
+                          7
+                        ],
+                        "start_byte": 222,
+                        "end_byte": 225,
+                        "text_preview": "\"\"\"",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "expression_statement",
+                "named": true,
+                "start_point": [
+                  7,
+                  4
+                ],
+                "end_point": [
+                  218,
+                  7
+                ],
+                "start_byte": 230,
+                "end_byte": 6902,
+                "text_preview": null,
+                "children": [
+                  {
+                    "type": "assignment",
+                    "named": true,
+                    "start_point": [
+                      7,
+                      4
+                    ],
+                    "end_point": [
+                      218,
+                      7
+                    ],
+                    "start_byte": 230,
+                    "end_byte": 6902,
+                    "text_preview": null,
+                    "children": [
+                      {
+                        "type": "identifier",
+                        "named": true,
+                        "start_point": [
+                          7,
+                          4
+                        ],
+                        "end_point": [
+                          7,
+                          15
+                        ],
+                        "start_byte": 230,
+                        "end_byte": 241,
+                        "text_preview": "css_content",
+                        "children": []
+                      },
+                      {
+                        "type": "=",
+                        "named": false,
+                        "start_point": [
+                          7,
+                          16
+                        ],
+                        "end_point": [
+                          7,
+                          17
+                        ],
+                        "start_byte": 242,
+                        "end_byte": 243,
+                        "text_preview": "=",
+                        "children": []
+                      },
+                      {
+                        "type": "string",
+                        "named": true,
+                        "start_point": [
+                          7,
+                          18
+                        ],
+                        "end_point": [
+                          218,
+                          7
+                        ],
+                        "start_byte": 244,
+                        "end_byte": 6902,
+                        "text_preview": null,
+                        "children": [
+                          {
+                            "type": "string_start",
+                            "named": true,
+                            "start_point": [
+                              7,
+                              18
+                            ],
+                            "end_point": [
+                              7,
+                              21
+                            ],
+                            "start_byte": 244,
+                            "end_byte": 247,
+                            "text_preview": "\"\"\"",
+                            "children": []
+                          },
+                          {
+                            "type": "string_content",
+                            "named": true,
+                            "start_point": [
+                              7,
+                              21
+                            ],
+                            "end_point": [
+                              218,
+                              4
+                            ],
+                            "start_byte": 247,
+                            "end_byte": 6899,
+                            "text_preview": "\\n    <style>\\n    /* Import modern Google Fonts */\\n    @import url('https://fonts.googleapis.com/css2?family=Orbitron:",
+                            "children": []
+                          },
+                          {
+                            "type": "string_end",
+                            "named": true,
+                            "start_point": [
+                              218,
+                              4
+                            ],
+                            "end_point": [
+                              218,
+                              7
+                            ],
+                            "start_byte": 6899,
+                            "end_byte": 6902,
+                            "text_preview": "\"\"\"",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "expression_statement",
+                "named": true,
+                "start_point": [
+                  219,
+                  4
+                ],
+                "end_point": [
+                  219,
+                  52
+                ],
+                "start_byte": 6907,
+                "end_byte": 6955,
+                "text_preview": null,
+                "children": [
+                  {
+                    "type": "call",
+                    "named": true,
+                    "start_point": [
+                      219,
+                      4
+                    ],
+                    "end_point": [
+                      219,
+                      52
+                    ],
+                    "start_byte": 6907,
+                    "end_byte": 6955,
+                    "text_preview": null,
+                    "children": [
+                      {
+                        "type": "attribute",
+                        "named": true,
+                        "start_point": [
+                          219,
+                          4
+                        ],
+                        "end_point": [
+                          219,
+                          15
+                        ],
+                        "start_byte": 6907,
+                        "end_byte": 6918,
+                        "text_preview": null,
+                        "children": [
+                          {
+                            "type": "identifier",
+                            "named": true,
+                            "start_point": [
+                              219,
+                              4
+                            ],
+                            "end_point": [
+                              219,
+                              6
+                            ],
+                            "start_byte": 6907,
+                            "end_byte": 6909,
+                            "text_preview": "st",
+                            "children": []
+                          },
+                          {
+                            "type": ".",
+                            "named": false,
+                            "start_point": [
+                              219,
+                              6
+                            ],
+                            "end_point": [
+                              219,
+                              7
+                            ],
+                            "start_byte": 6909,
+                            "end_byte": 6910,
+                            "text_preview": ".",
+                            "children": []
+                          },
+                          {
+                            "type": "identifier",
+                            "named": true,
+                            "start_point": [
+                              219,
+                              7
+                            ],
+                            "end_point": [
+                              219,
+                              15
+                            ],
+                            "start_byte": 6910,
+                            "end_byte": 6918,
+                            "text_preview": "markdown",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "type": "argument_list",
+                        "named": true,
+                        "start_point": [
+                          219,
+                          15
+                        ],
+                        "end_point": [
+                          219,
+                          52
+                        ],
+                        "start_byte": 6918,
+                        "end_byte": 6955,
+                        "text_preview": null,
+                        "children": [
+                          {
+                            "type": "(",
+                            "named": false,
+                            "start_point": [
+                              219,
+                              15
+                            ],
+                            "end_point": [
+                              219,
+                              16
+                            ],
+                            "start_byte": 6918,
+                            "end_byte": 6919,
+                            "text_preview": "(",
+                            "children": []
+                          },
+                          {
+                            "type": "identifier",
+                            "named": true,
+                            "start_point": [
+                              219,
+                              16
+                            ],
+                            "end_point": [
+                              219,
+                              27
+                            ],
+                            "start_byte": 6919,
+                            "end_byte": 6930,
+                            "text_preview": "css_content",
+                            "children": []
+                          },
+                          {
+                            "type": ",",
+                            "named": false,
+                            "start_point": [
+                              219,
+                              27
+                            ],
+                            "end_point": [
+                              219,
+                              28
+                            ],
+                            "start_byte": 6930,
+                            "end_byte": 6931,
+                            "text_preview": ",",
+                            "children": []
+                          },
+                          {
+                            "type": "keyword_argument",
+                            "named": true,
+                            "start_point": [
+                              219,
+                              29
+                            ],
+                            "end_point": [
+                              219,
+                              51
+                            ],
+                            "start_byte": 6932,
+                            "end_byte": 6954,
+                            "text_preview": null,
+                            "children": [
+                              {
+                                "type": "identifier",
+                                "named": true,
+                                "start_point": [
+                                  219,
+                                  29
+                                ],
+                                "end_point": [
+                                  219,
+                                  46
+                                ],
+                                "start_byte": 6932,
+                                "end_byte": 6949,
+                                "text_preview": "unsafe_allow_html",
+                                "children": []
+                              },
+                              {
+                                "type": "=",
+                                "named": false,
+                                "start_point": [
+                                  219,
+                                  46
+                                ],
+                                "end_point": [
+                                  219,
+                                  47
+                                ],
+                                "start_byte": 6949,
+                                "end_byte": 6950,
+                                "text_preview": "=",
+                                "children": []
+                              },
+                              {
+                                "type": "true",
+                                "named": true,
+                                "start_point": [
+                                  219,
+                                  47
+                                ],
+                                "end_point": [
+                                  219,
+                                  51
+                                ],
+                                "start_byte": 6950,
+                                "end_byte": 6954,
+                                "text_preview": "True",
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": ")",
+                            "named": false,
+                            "start_point": [
+                              219,
+                              51
+                            ],
+                            "end_point": [
+                              219,
+                              52
+                            ],
+                            "start_byte": 6954,
+                            "end_byte": 6955,
+                            "text_preview": ")",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "source": "import streamlit as st\n\ndef inject_custom_css():\n    \"\"\"\n    Injects a high-fidelity, premium CSS theme into the Streamlit application.\n    This replaces standard Streamlit styles with a gorgeous glassmorphic dark UI.\n    \"\"\"\n    css_content = \"\"\"\n    <style>\n    /* Import modern Google Fonts */\n    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');\n\n    /* Background and Layout Overrides */\n    .stApp {\n        background: radial-gradient(circle at 50% 50%, #171a25 0%, #08090d 100%) !important;\n        font-family: 'Outfit', sans-serif !important;\n        color: #f1f5f9 !important;\n    }\n    \n    /* Remove default Streamlit header and footer */\n    header {visibility: hidden;}\n    footer {visibility: hidden;}\n    #MainMenu {visibility: hidden;}\n    \n    /* Main container card */\n    .calc-card {\n        background: rgba(22, 28, 41, 0.45);\n        backdrop-filter: blur(20px);\n        -webkit-backdrop-filter: blur(20px);\n        border: 1px solid rgba(255, 255, 255, 0.05);\n        border-radius: 28px;\n        padding: 30px;\n        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),\n                    0 0 40px rgba(0, 242, 254, 0.03);\n        margin: 20px auto;\n        max-width: 580px;\n    }\n\n    /* Screen display */\n    .led-screen {\n        background: #06070a;\n        border: 1px solid rgba(255, 255, 255, 0.03);\n        border-radius: 20px;\n        padding: 22px 26px;\n        box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.8),\n                    0 0 1px rgba(255, 255, 255, 0.1);\n        margin-bottom: 25px;\n        text-align: right;\n        min-height: 120px;\n        display: flex;\n        flex-direction: column;\n        justify-content: space-between;\n        overflow: hidden;\n    }\n    \n    .screen-formula {\n        font-family: 'JetBrains Mono', monospace;\n        font-size: 1.1rem;\n        color: #64748b;\n        overflow-x: auto;\n        white-space: nowrap;\n        min-height: 28px;\n        letter-spacing: 0.5px;\n    }\n    \n    .screen-result {\n        font-family: 'Orbitron', sans-serif;\n        font-size: 2.5rem;\n        font-weight: 700;\n        color: #00f2fe;\n        text-shadow: 0 0 12px rgba(0, 242, 254, 0.4);\n        overflow-x: auto;\n        white-space: nowrap;\n        margin-top: 10px;\n        letter-spacing: 1px;\n    }\n\n    .screen-error {\n        font-family: 'JetBrains Mono', monospace;\n        font-size: 1.3rem;\n        color: #ef4444 !important;\n        text-shadow: 0 0 8px rgba(239, 68, 68, 0.3) !important;\n        margin-top: 15px;\n    }\n\n    /* Streamlit input custom styles */\n    .stTextInput input {\n        background-color: #090b10 !important;\n        border: 1px solid rgba(255, 255, 255, 0.08) !important;\n        color: #e2e8f0 !important;\n        font-family: 'JetBrains Mono', monospace !important;\n        border-radius: 12px !important;\n        padding: 10px 15px !important;\n    }\n    .stTextInput input:focus {\n        border-color: #00f2fe !important;\n        box-shadow: 0 0 0 2px rgba(0, 242, 254, 0.2) !important;\n    }\n\n    /* Streamlit Button Customization */\n    div.stButton > button {\n        width: 100% !important;\n        height: 62px !important;\n        border-radius: 16px !important;\n        font-size: 1.15rem !important;\n        font-weight: 600 !important;\n        font-family: 'Outfit', sans-serif !important;\n        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;\n        border: 1px solid rgba(255, 255, 255, 0.06) !important;\n        background: rgba(30, 41, 59, 0.45) !important;\n        color: #f1f5f9 !important;\n        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),\n                    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;\n    }\n    \n    /* Secondary/standard Button Hover */\n    div.stButton > button:hover {\n        transform: translateY(-2px) scale(1.025) !important;\n        border-color: rgba(0, 242, 254, 0.35) !important;\n        background: rgba(30, 41, 59, 0.75) !important;\n        color: #00f2fe !important;\n        box-shadow: 0 10px 15px -3px rgba(0, 242, 254, 0.15),\n                    0 4px 6px -2px rgba(0, 242, 254, 0.05) !important;\n    }\n    \n    div.stButton > button:active {\n        transform: translateY(1px) scale(0.97) !important;\n    }\n\n    /* Primary buttons (equal sign) */\n    div.stButton > button[data-testid=\"baseButton-primary\"] {\n        background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%) !important;\n        color: #040508 !important;\n        font-weight: 700 !important;\n        font-size: 1.3rem !important;\n        border: none !important;\n        box-shadow: 0 8px 20px rgba(0, 242, 254, 0.25) !important;\n    }\n    \n    div.stButton > button[data-testid=\"baseButton-primary\"]:hover {\n        background: linear-gradient(135deg, #33f6ff 0%, #66b5ff 100%) !important;\n        box-shadow: 0 12px 25px rgba(0, 242, 254, 0.45) !important;\n        color: #040508 !important;\n    }\n\n    /* Scientific / Math Constants Buttons logic inside layout columns */\n    .sci-label {\n        font-size: 0.85rem;\n        color: #64748b;\n        text-transform: uppercase;\n        letter-spacing: 1px;\n        margin-bottom: 8px;\n        font-weight: 600;\n    }\n\n    /* Sidebar glassmorphism */\n    section[data-testid=\"stSidebar\"] {\n        background-color: rgba(10, 12, 18, 0.95) !important;\n        border-right: 1px solid rgba(255, 255, 255, 0.05) !important;\n    }\n    \n    /* Interactive History panel styling */\n    .history-item {\n        background: rgba(255, 255, 255, 0.02);\n        border: 1px solid rgba(255, 255, 255, 0.04);\n        border-radius: 12px;\n        padding: 12px 16px;\n        margin-bottom: 10px;\n        cursor: pointer;\n        transition: all 0.2s ease;\n    }\n    \n    .history-item:hover {\n        background: rgba(0, 242, 254, 0.04);\n        border-color: rgba(0, 242, 254, 0.2);\n    }\n    \n    .history-formula {\n        font-family: 'JetBrains Mono', monospace;\n        font-size: 0.85rem;\n        color: #94a3b8;\n        word-break: break-all;\n    }\n    \n    .history-result {\n        font-family: 'JetBrains Mono', monospace;\n        font-size: 1.1rem;\n        font-weight: 700;\n        color: #00f2fe;\n        margin-top: 4px;\n        text-align: right;\n    }\n    \n    /* Info cards */\n    .info-card {\n        background: rgba(255, 255, 255, 0.01);\n        border-left: 3px solid #00f2fe;\n        padding: 12px 16px;\n        border-radius: 0 12px 12px 0;\n        margin-bottom: 15px;\n    }\n\n    /* Scrollbars */\n    ::-webkit-scrollbar {\n        width: 6px;\n        height: 6px;\n    }\n    ::-webkit-scrollbar-track {\n        background: rgba(0,0,0,0.1);\n    }\n    ::-webkit-scrollbar-thumb {\n        background: rgba(255,255,255,0.1);\n        border-radius: 3px;\n    }\n    ::-webkit-scrollbar-thumb:hover {\n        background: rgba(0, 242, 254, 0.3);\n    }\n    </style>\n    \"\"\"\n    st.markdown(css_content, unsafe_allow_html=True)\n",
+  "warnings": [],
+  "parse_error": null,
+  "generated_at": "2026-05-26T15:37:36.914893Z"
+}

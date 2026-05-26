@@ -1,0 +1,53 @@
+{
+  "repo_id": "7a75be1b6008455f8a5b4b73dfede102",
+  "stages": {
+    "raw_repo_text": {
+      "stage": "raw_repo_text",
+      "tokens": 6592,
+      "count_type": "estimated",
+      "provider": null,
+      "model": null,
+      "notes": "Estimated with cl100k_base via tiktoken; Gemini exact counts are collected at LLM call time when configured."
+    },
+    "chunked_basic_retrieval_context": {
+      "stage": "chunked_basic_retrieval_context",
+      "tokens": 7280,
+      "count_type": "estimated",
+      "provider": null,
+      "model": null,
+      "notes": "Estimated with cl100k_base via tiktoken; Gemini exact counts are collected at LLM call time when configured."
+    },
+    "codegraph_derived_context": {
+      "stage": "codegraph_derived_context",
+      "tokens": 16500,
+      "count_type": "estimated",
+      "provider": null,
+      "model": null,
+      "notes": "Estimated with cl100k_base via tiktoken; Gemini exact counts are collected at LLM call time when configured."
+    },
+    "graphify_derived_context": {
+      "stage": "graphify_derived_context",
+      "tokens": 6293,
+      "count_type": "estimated",
+      "provider": null,
+      "model": null,
+      "notes": "Estimated with cl100k_base via tiktoken; Gemini exact counts are collected at LLM call time when configured."
+    },
+    "merged_optimized_context": {
+      "stage": "merged_optimized_context",
+      "tokens": 22794,
+      "count_type": "estimated",
+      "provider": null,
+      "model": null,
+      "notes": "Estimated with cl100k_base via tiktoken; Gemini exact counts are collected at LLM call time when configured."
+    }
+  },
+  "cumulative_session_usage": {
+    "chunked_basic_retrieval_context": 10620,
+    "llm_prompt_tokens": 25870,
+    "llm_response_tokens": 2407,
+    "total_per_query_tokens": 30393,
+    "codegraph_graphify_optimized_context": 8890
+  },
+  "updated_at": "2026-05-26T10:52:10.325552Z"
+}

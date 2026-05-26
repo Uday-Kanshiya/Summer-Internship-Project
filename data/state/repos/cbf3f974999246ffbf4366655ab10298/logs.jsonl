@@ -1,0 +1,8 @@
+{"timestamp": "2026-05-26T10:16:53.716972+00:00", "stage": "pipeline", "level": "info", "message": "Analysis started.", "metadata": {}}
+{"timestamp": "2026-05-26T10:16:53.904147+00:00", "stage": "ingestion", "level": "info", "message": "Discovered 3 Python files.", "metadata": {}}
+{"timestamp": "2026-05-26T10:16:54.262759+00:00", "stage": "tree-sitter", "level": "info", "message": "Parsed 3 files.", "metadata": {}}
+{"timestamp": "2026-05-26T10:16:54.298260+00:00", "stage": "codegraph", "level": "info", "message": "Generated 102 nodes and 105 edges.", "metadata": {}}
+{"timestamp": "2026-05-26T10:16:54.325848+00:00", "stage": "graphify", "level": "warning", "message": "Graphify CLI not found. Install optional package graphifyy to enable native Graphify output.", "metadata": {}}
+{"timestamp": "2026-05-26T10:16:54.328816+00:00", "stage": "graphify", "level": "info", "message": "Stored graphify-fallback graph with 102 nodes and 105 edges.", "metadata": {}}
+{"timestamp": "2026-05-26T10:16:55.744072+00:00", "stage": "tokens", "level": "info", "message": "Token summary generated.", "metadata": {}}
+{"timestamp": "2026-05-26T10:16:55.751518+00:00", "stage": "pipeline", "level": "info", "message": "Analysis finished with status RepoStatus.partial.", "metadata": {}}
